@@ -15,4 +15,9 @@ class Profile extends Model
     {
         return $this->hasMany('App\UserAttributeLine');
     }
+
+    public function Cv()
+    {
+        return $this->hasMany("App\Cv");
+    }
 }
