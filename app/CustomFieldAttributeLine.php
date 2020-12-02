@@ -10,4 +10,9 @@ class CustomFieldAttributeLine extends Model
     {
         return $this->belongsTo("App\CustomFieldCategory");
     }
+
+    public function CustomFieldAttributeLineVelue()
+    {
+        return $this->hasMany("App\CustomFieldAttributeLineValue");
+    }
 }
