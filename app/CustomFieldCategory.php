@@ -15,4 +15,9 @@ class CustomFieldCategory extends Model
     {
         return $this->hasMany("App\CustomFieldRecord");
     }
+
+    public function CustomFieldAttributeLine()
+    {
+        return $this->hasMany("App\CustomFieldAttributeLine");
+    }
 }
