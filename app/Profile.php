@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
+
+    protected $fillable = ["first_name", "last_name", "profession", "photo", "address", "email", "birth_date", "phone", "gender"];
+
     public function User()
     {
         return $this->belongsTo('App\Profile');

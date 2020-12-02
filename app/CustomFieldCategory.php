@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CustomFieldCategory extends Model
 {
+
+    protected $fillable = ["nama", "order", "is_active", "cv_id"];
+
     public function Cv()
     {
         return $this->belongsTo("App\Cv");
