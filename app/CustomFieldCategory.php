@@ -11,12 +11,12 @@ class CustomFieldCategory extends Model
         return $this->belongsTo("App\Cv");
     }
 
-    public function CustomFieldRecord()
+    public function CustomFieldRecords()
     {
         return $this->hasMany("App\CustomFieldRecord");
     }
 
-    public function CustomFieldAttributeLine()
+    public function CustomFieldAttributeLines()
     {
         return $this->hasMany("App\CustomFieldAttributeLine");
     }

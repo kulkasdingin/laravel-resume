@@ -11,7 +11,7 @@ class Cv extends Model
         return $this->belongsTo("App\Profile");
     }
 
-    public function CustomFieldCategory()
+    public function CustomFieldCategories()
     {
         return $this->hasMany("App\CustomFieldCategory");
     }

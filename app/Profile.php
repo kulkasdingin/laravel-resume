@@ -11,12 +11,12 @@ class Profile extends Model
         return $this->belongsTo('App\Profile');
     }
 
-    public function UserAttributeLine()
+    public function UserAttributeLines()
     {
         return $this->hasMany('App\UserAttributeLine');
     }
 
-    public function Cv()
+    public function Cvs()
     {
         return $this->hasMany("App\Cv");
     }
