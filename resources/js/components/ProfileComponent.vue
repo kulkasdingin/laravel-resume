@@ -90,13 +90,13 @@
                 // alert(this.profile.profesion);
                 formData.append('user_id', 1);
 
-                axios.post(this.uri + '/' +id, formData)
+                axios.post(this.uri, formData)
                 .then(response=>{
                     let profile = response.data.profile;
                     this.profiles.push(profile);
                     console.log(response.data.status);
                 })
-                .error(response=>{
+                .catch(response=>{
 
                 });
             },
