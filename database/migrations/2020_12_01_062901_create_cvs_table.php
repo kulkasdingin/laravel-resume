@@ -29,7 +29,7 @@ class CreateCvsTable extends Migration
             $table->string("password")->nullable();
             $table->boolean("is_active");
             $table->boolean("is_protected");
-            $table->foreignUuid("profile_id")->constrained();
+            $table->unsignedInteger("profile_id")->constrained();
         });
     }
 

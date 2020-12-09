@@ -14,5 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $name = 'farizzzz';
+    return view('random.welcome', compact('name'));
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/profile', function(){
+    return view('profile');
+});
+
+Route::middleware('auth')->prefix('resource')->group(function(){
+    Route::resources([
+        'profiles' => ProfileController::class,
+    ]);
 });

@@ -14,17 +14,18 @@ class CreateProfilesTable extends Migration
     public function up()
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->uuid("id")->primary();
+            $table->id();
+            // $table->uuid("uuid");
             $table->timestamps();
             $table->string("first_name");
             $table->string("last_name");
             $table->string("profesion");
-            $table->string("photo")->nullable();
-            $table->string("address")->nullable();
+            $table->text("photo")->nullable();
+            $table->text("address")->nullable();
             $table->string("email")->unique();
             $table->date("birth_date")->nullable();
             $table->string("phone")->nullable();
-            $table->integer("gender")->nullable()->comment("0 = male, 1 = female");
+            $table->boolean("gender")->nullable()->comment("0 = male, 1 = female");
             $table->foreignId("user_id")->constrained();
         });
     }

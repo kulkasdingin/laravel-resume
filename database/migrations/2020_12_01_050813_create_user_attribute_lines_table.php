@@ -20,7 +20,7 @@ class CreateUserAttributeLinesTable extends Migration
             $table->string("value");
             $table->integer("order");
 
-            $table->foreignUuid("profile_id")->constrained();
+            $table->unsignedInteger("profile_id")->constrained();
         });
     }
 
