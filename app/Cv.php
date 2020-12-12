@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cv extends Model
 {
+    use SoftDeletes;
 
-    protected $fillable = ["is_active", "is_protected", "user_id", "first_name", "last_name", "profession", "photo", "address", "email", "birth_date", "phone", "gender", "password"];
+    protected $fillable = ["is_active", "is_protected", "user_id", "first_name", "last_name", "profession", "photo", "address", "email", "birth_date", "phone", "gender", "password", "user_id"];
 
     protected $hidden = ["password"];
 

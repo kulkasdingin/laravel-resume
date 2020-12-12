@@ -14,12 +14,12 @@ class CreateCustomFieldCategoriesTable extends Migration
     public function up()
     {
         Schema::create('custom_field_categories', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->timestamps();
             $table->string("nama");
             $table->integer("order");
             $table->boolean("is_active");
-            $table->foreignId("Cv_id")->constrained();
+            $table->unsignedBigInteger("cv_id");
         });
     }
 
