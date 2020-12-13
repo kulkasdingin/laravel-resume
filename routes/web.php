@@ -23,7 +23,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','admin'])->group(func
     
     Route::get('/dashboard', 'Admin\AdminController@dashboard')->name('dashboard');
 
-    Route::get('/profile', 'Admin\AdminController@profile')->name('profile');
+    Route::get('/profiles', 'Admin\AdminController@profiles')->name('profile');
 
     Route::prefix('resource')->name('resource.')->group(function(){
         Route::resources([

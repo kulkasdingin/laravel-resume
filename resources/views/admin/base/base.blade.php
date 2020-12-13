@@ -15,6 +15,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('/assets/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Infile style -->
+    @yield('style')
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('/assets/adminlte/dist/css/adminlte.min.css') }}">
     <!-- Custom style -->
@@ -281,6 +283,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('/assets/adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('/assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Infile Script-->
+    @yield('script')
     <!-- AdminLTE App -->
     <script src="{{ asset('/assets/adminlte/dist/js/adminlte.min.js') }}"></script>
     <!-- Vue -->

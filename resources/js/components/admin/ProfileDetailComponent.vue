@@ -107,7 +107,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8 offset-2 text-center custom-col-image-wrapper custom-wrapper-1x1">
-                            <template v-if="profile.photoe">
+                            <template v-if="profile.photo">
                                 <img id="profile-image" class="mx-auto img-fluid img-circle custom-image-wrapped border-secondary p-1"
                                     v-bind:src="profile.photo"
                                     alt="User profile picture"

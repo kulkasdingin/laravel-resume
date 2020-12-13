@@ -19,3 +19,10 @@
     object-fit: cover; /* Equivalent of the background-size: cover; of a background-image */
     object-position: center;
 }
+
+.fade-enter-active, .fade-leave-active {
+    transition: all .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
