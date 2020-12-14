@@ -14,13 +14,11 @@ class CreateCustomFieldRecordAttributeLineValuesTable extends Migration
     public function up()
     {
         Schema::create('custom_field_record_attribute_line_values', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->timestamps();
             $table->text("value");
             $table->unsignedBigInteger("custom_field_record_id");
-            $table->foreign("custom_field_record_id", "field_record_attribute_line_value_field_record_id_foreign")->references("id")->on("custom_field_records");
             $table->unsignedBigInteger("custom_field_attribute_line_id");
-            $table->foreign("custom_field_attribute_line_id", "record_attribute_line_value_attribute_line_id_foreign")->references("id")->on("custom_field_attribute_lines");
         });
     }
 

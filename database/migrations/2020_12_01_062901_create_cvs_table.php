@@ -14,22 +14,21 @@ class CreateCvsTable extends Migration
     public function up()
     {
         Schema::create('cvs', function (Blueprint $table) {
-            $table->id();
-            $table->uuid("uuid");
-            $table->timestamps();
+            $table->bigIncrements('id');
             $table->string("first_name");
             $table->string("last_name");
-            $table->string("profesion");
-            $table->string("photo")->nullable();
-            $table->string("address")->nullable();
-            $table->string("email")->unique();
+            $table->string("profession");
+            $table->text("photo")->nullable();
+            $table->text("address")->nullable();
+            $table->string("email")->nullable();
             $table->date("birth_date")->nullable();
             $table->string("phone")->nullable();
-            $table->integer("gender")->nullable()->comment("0 = male, 1 = female");
+            $table->integer("gender")->nullable();
             $table->string("password")->nullable();
             $table->boolean("is_active");
             $table->boolean("is_protected");
-            $table->foreignUuid("profile_id")->constrained();
+            $table->timestamps();
+            $table->unsignedBigInteger("profile_id");
         });
     }
 

@@ -14,10 +14,10 @@ class CreateCustomFieldRecordsTable extends Migration
     public function up()
     {
         Schema::create('custom_field_records', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->timestamps();
             $table->integer("order");
-            $table->foreignId("custom_field_category_id")->constrained();
+            $table->unsignedBigInteger("custom_field_category_id");
         });
     }
 

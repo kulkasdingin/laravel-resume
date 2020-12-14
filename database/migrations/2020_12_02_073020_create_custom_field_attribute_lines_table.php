@@ -14,12 +14,12 @@ class CreateCustomFieldAttributeLinesTable extends Migration
     public function up()
     {
         Schema::create('custom_field_attribute_lines', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->timestamps();
             $table->string("nama");
             $table->integer('order');
             $table->boolean("is_active");
-            $table->foreignId("custom_field_category_id")->constrained();
+            $table->unsignedBigInteger("custom_field_category_id");
         });
     }
 

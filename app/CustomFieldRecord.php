@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CustomFieldRecord extends Model
 {
+    use SoftDeletes;
 
     protected $fillable = ["order", "custom_field_category_id"];
 
