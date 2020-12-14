@@ -32,5 +32,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','admin'])->group(func
     });
 });
 
+Route::prefix('CV')->name('CV.')->middleware(['auth'])->group(function(){
+    
+    Route::get('/templates-plain', 'CV\CVController@templates_plain')->name('templates_plain');
+
+    // Route::get('/profiles', 'Admin\AdminController@profiles')->name('profile');
+
+    Route::prefix('resource')->name('resource.')->group(function(){
+        Route::resources([
+            'profiles' => ProfileController::class,
+        ]);
+    });
+});
 
 // Route::get('/home', 'HomeController@index')->name('home');
