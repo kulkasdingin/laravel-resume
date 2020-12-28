@@ -27,7 +27,7 @@
 
 				<div class="yui-u">
 					<div class="contact-info">
-						<h3><a href="">{{ cv.email }}</a></h3>
+						<h3>{{ cv.email }}</h3>
 						<h3>{{ cv.phone }}</h3>
 					</div><!--// .contact-info -->
 				</div>
