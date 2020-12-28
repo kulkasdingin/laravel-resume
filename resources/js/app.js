@@ -22,7 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('profiles-component', require('./components/admin/ProfilesComponent.vue').default);
 Vue.component('profile-detail-component', require('./components/admin/ProfileDetailComponent.vue').default);
-
+Vue.component('cv-template-plain',require('./components/CVTemplatePlainComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
