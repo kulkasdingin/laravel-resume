@@ -26,4 +26,9 @@ class CVController extends Controller
     {
         return view('cv.templates-plain');
     }
+
+    public function templates_demo()
+    {
+        return view('cv.templates-demo');
+    }
 }
