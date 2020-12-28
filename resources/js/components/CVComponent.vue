@@ -15,8 +15,7 @@
 
 </head>
 <body>
-<p>AAAAAAAAAAAAAAAAAAAAAAA</p>
-<div id="doc2" v-if="cv !== null" class="yui-t7">
+<div id="doc2" v-if="cvDataLoaded" class="yui-t7">
 	<div id="inner">
 	
 		<div id="hd">
@@ -28,7 +27,7 @@
 
 				<div class="yui-u">
 					<div class="contact-info">
-						<h3><a href="mailto:{{ cv.email }}">{{ cv.email }}</a></h3>
+						<h3><a href="">{{ cv.email }}</a></h3>
 						<h3>{{ cv.phone }}</h3>
 					</div><!--// .contact-info -->
 				</div>
@@ -249,7 +248,8 @@
     export default {
         data(){
             return{
-                cv: null,
+				cv: null,
+				cvDataLoaded: false,
                 // profiles:[],
                 // profileState: [true, 'Square'], // isCircle, InnerHtml
                 uri: '/admin/resource/cvs'
@@ -257,6 +257,7 @@
         },
         methods: {
             cvInit(){
+				
                 // $("#profiles-table").DataTable({
                 //     "responsive": true, 
                 //     "lengthChange": false, 
@@ -266,7 +267,8 @@
                 // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             },
             putAsyncData(data){
-                this.cv = data;
+				this.cv = data;
+				this.cvDataLoaded = true;
             },
             loadData(){
 				var id = window.location.href.split('/').pop();
