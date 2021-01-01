@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\CV;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class CVController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,22 +22,15 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function dashboard()
+
+    public function templates_first()
     {
-        return view('admin.dashboard');
+        return view('cv.templates-first');
     }
 
-    public function profiles()
+    public function templates_second()
     {
-        return view('admin.profiles');
+        return view('cv.templates-second');
     }
 
-    public function listCV(){
-        return view('cv.index');
-    }
-
-    public function listCVProfile()
-    {
-        return view("cv.indexProfile");
-    }
 }
