@@ -54,7 +54,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
             </form> --}}
-            
+
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -68,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user1-128x128.jpg" alt="User Avatar"
+                                <img src="{{ asset('/assets/adminlte/dist/img/user1-128x128.jpg')}}" alt="User Avatar"
                                     class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -85,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user8-128x128.jpg" alt="User Avatar"
+                                <img src="{{ asset('/assets/adminlte/dist/img/user8-128x128.jpg') }}" alt="User Avatar"
                                     class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -102,7 +102,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user3-128x128.jpg" alt="User Avatar"
+
+                                <img src="{{ asset('/assets/adminlte/dist/img/user3-128x128.jpg')}}" alt="User Avatar"
                                     class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -198,11 +199,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->segment(2) == 'dashboard' ? 'active' : '' }}">
+                            <a href="{{ route('admin.dashboard') }}"
+                                class="nav-link {{ request()->segment(2) == 'dashboard' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Dashboard
@@ -210,10 +213,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->segment(2) == 'profile' ? 'active' : '' }}">
+                            <a href="{{ route('admin.profile') }}"
+                                class="nav-link {{ request()->segment(2) == 'profile' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Profile
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('CV.daftar_cv') }}"
+                                class="nav-link {{ request()->segment(1) == 'CV' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    CV
                                 </p>
                             </a>
                         </li>
