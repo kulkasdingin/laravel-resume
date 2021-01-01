@@ -22,10 +22,6 @@ class CVController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function templates_plain()
-    {
-        return view('cv.templates-plain');
-    }
 
     public function templates_first()
     {
@@ -37,18 +33,4 @@ class CVController extends Controller
         return view('cv.templates-second');
     }
 
-    public function templates_demo()
-    {
-        return view('cv.templates-demo');
-    }
-
-    // public function listCV()
-    // {
-    //     return view('cv.index');
-    // }
-
-    // public function listCVProfile()
-    // {
-    //     return view("cv.indexProfile");
-    // }
 }

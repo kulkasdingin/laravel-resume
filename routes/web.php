@@ -40,13 +40,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
 Route::prefix('CV')->name('CV.')->group(function () {
 
-    Route::get('/templates-plain', 'CV\CVController@templates_plain')->name('templates_plain');
-
     Route::get('/first/{idcv}', 'CV\CVController@templates_first')->name('templates_first');
 
     Route::get('/second/{idcv}', 'CV\CVController@templates_second')->name('templates_second');
-
-    Route::get('/{id}', 'CV\CVController@templates_demo')->name('templates_demo');
 
     // Route::get('/profiles', 'Admin\AdminController@profiles')->name('profile');
 

@@ -22,8 +22,6 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('profiles-component', require('./components/admin/ProfilesComponent.vue').default);
 Vue.component('profile-detail-component', require('./components/admin/ProfileDetailComponent.vue').default);
-Vue.component('cv-template-plain',require('./components/CVTemplatePlainComponent.vue').default);
-Vue.component('cv-template-demo',require('./components/CVComponent.vue').default);
 Vue.component('daftar-cv', require('./components/CVList.vue').default);
 
 
