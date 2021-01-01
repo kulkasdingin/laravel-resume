@@ -3,7 +3,7 @@
 <html>
 <head>
 
-	<title>Jonathan Doe | Web Designer, Director | name@yourdomain.com</title>
+	<title>Second Template</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
 	<meta name="keywords" content="" />
@@ -15,21 +15,20 @@
 
 </head>
 <body>
-
-<div id="doc2" class="yui-t7">
+<div id="doc2" v-if="cvDataLoaded" class="yui-t7">
 	<div id="inner">
 	
 		<div id="hd">
 			<div class="yui-gc">
 				<div class="yui-u first">
-					<h1>Jonathan Doe</h1>
-					<h2>Web Designer, Director</h2>
+					<h1>{{ cv.first_name }} {{ cv.last_name }}</h1>
+					<h2>{{ cv.profession }}</h2>
 				</div>
 
 				<div class="yui-u">
 					<div class="contact-info">
-						<h3><a href="mailto:name@yourdomain.com">name@yourdomain.com</a></h3>
-						<h3>(313) - 867-5309</h3>
+						<h3>{{ cv.email }}</h3>
+						<h3>{{ cv.phone }}</h3>
 					</div><!--// .contact-info -->
 				</div>
 			</div><!--// .yui-gc -->
@@ -41,7 +40,7 @@
 
 					<div class="yui-gf">
 						<div class="yui-u first">
-							<h2>Profile</h2>
+							<h2>Profile Second</h2>
 						</div>
 						<div class="yui-u">
 							<p class="enlarge">
@@ -244,3 +243,48 @@
         .yui-gf div.first{width:12.3%;}
 
 </style>
+
+<script>
+    export default {
+        data(){
+            return{
+				cv: null,
+				cvDataLoaded: false,
+                // profiles:[],
+                // profileState: [true, 'Square'], // isCircle, InnerHtml
+                uri: '/admin/resource/cvs'
+            }
+        },
+        methods: {
+            cvInit(){
+				
+                // $("#profiles-table").DataTable({
+                //     "responsive": true, 
+                //     "lengthChange": false, 
+                //     "autoWidth": false,
+                //     "destroy": true,
+                //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                // }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            },
+            putAsyncData(data){
+				this.cv = data;
+				this.cvDataLoaded = true;
+            },
+            loadData(){
+				var id = window.location.href.split('/').pop();
+                axios.get(this.uri + "/" + id)
+                .then(response=>{
+                    let self = this
+                    $.when(this.putAsyncData(response.data.cv)).then(function(){
+						self.cvInit();
+						console.log(response.data.cv)
+                    });
+                });
+            },
+        },
+        mounted() {
+            this.loadData();
+			console.log('Component mounted.');
+        }
+    }
+</script>

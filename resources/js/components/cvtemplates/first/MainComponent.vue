@@ -3,7 +3,7 @@
 <html>
 <head>
 
-	<title>Jonathan Doe | Web Designer, Director | name@yourdomain.com</title>
+	<title>First Template</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
 	<meta name="keywords" content="" />
@@ -40,7 +40,7 @@
 
 					<div class="yui-gf">
 						<div class="yui-u first">
-							<h2>Profile</h2>
+							<h2>Profile First</h2>
 						</div>
 						<div class="yui-u">
 							<p class="enlarge">

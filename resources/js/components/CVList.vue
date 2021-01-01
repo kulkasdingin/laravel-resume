@@ -56,8 +56,11 @@
                 <!-- Show modal to update CV -->
                 <a href="" class="btn btn-sm btn-warning">Update</a>
                 <!-- Url to display template cv -->
-                <a v-bind:href="'/CV/' + cv.id" class="btn btn-sm btn-primary"
-                  >View</a
+                <a v-bind:href="'/CV/first/' + cv.id" class="btn btn-sm btn-primary"
+                  >View First Template</a
+                >
+                <a v-bind:href="'/CV/second/' + cv.id" class="btn btn-sm btn-primary"
+                  >View Second Template</a
                 >
                 <!-- Deactive a cv -->
                 <a href="" class="btn btn-sm btn-danger">Deactive</a>

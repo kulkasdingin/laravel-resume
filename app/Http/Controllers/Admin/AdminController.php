@@ -31,4 +31,13 @@ class AdminController extends Controller
     {
         return view('admin.profiles');
     }
+
+    public function listCV(){
+        return view('cv.index');
+    }
+
+    public function listCVProfile()
+    {
+        return view("cv.indexProfile");
+    }
 }
