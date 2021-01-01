@@ -222,7 +222,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('CV.daftar_cv') }}"
+                            <a href="{{ route('admin.daftar_cv') }}"
                                 class="nav-link {{ request()->segment(1) == 'CV' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
