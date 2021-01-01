@@ -31,4 +31,14 @@ class CVController extends Controller
     {
         return view('cv.templates-demo');
     }
+
+    public function listCV()
+    {
+        return view('cv.index');
+    }
+
+    public function listCVProfile()
+    {
+        return view("cv.indexProfile");
+    }
 }
