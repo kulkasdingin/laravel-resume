@@ -25,6 +25,13 @@ Vue.component('profile-detail-component', require('./components/admin/ProfileDet
 Vue.component('cv-template-plain',require('./components/CVTemplatePlainComponent.vue').default);
 Vue.component('cv-template-demo',require('./components/CVComponent.vue').default);
 Vue.component('daftar-cv', require('./components/CVList.vue').default);
+
+
+//add new CV templates here
+Vue.component('cv-template-first',require('./components/cvtemplates/first/MainComponent.vue').default);
+Vue.component('cv-template-second',require('./components/cvtemplates/second/MainComponent.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
