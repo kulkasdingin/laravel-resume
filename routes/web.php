@@ -26,7 +26,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::get('/profiles', 'Admin\AdminController@profiles')->name('profile');
 
-    Route::get('/CV', 'Admin\AdminController@listCV')->name('daftar_cv');
+    Route::prefix("/CV")->name('cv.')->group(function () {
+
+        Route::get("", 'Admin\AdminController@listCV')->name("");
+
+        Route::get("/new", 'Admin\ManageCVController@create')->name("create");
+    });
 
     Route::get('/profile/{id_profile}', 'Admin\AdminController@profileDetail')->name('profile-detail');
 
