@@ -4,10 +4,8 @@
       <div class="card-header">
         <h1 class="card-title">CVs</h1>
         <a
-          href=""
+          v-bind:href="'/admin/CV/new'"
           class="btn btn-sm btn-success float-right"
-          data-toggle="modal"
-          data-target="#modal-add-new"
           >Add New</a
         >
       </div>
@@ -46,10 +44,10 @@
               </td>
               <td>
                 <template v-if="cv.updated_at">
-                  {{ cv.updated_at }}
+                  {{ moment(cv.updated_at) }}
                 </template>
                 <template v-else>
-                  {{ cv.created_at }}
+                  {{ moment(cv.created_at) }}
                 </template>
               </td>
               <td class="align-content-center">
@@ -81,6 +79,7 @@
   <!-- add update kasih tambah row buat tambah custom field -->
 </template>
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
@@ -106,19 +105,6 @@ export default {
     };
   },
   methods: {
-    tableInit() {
-      $("#cvs-table")
-        .DataTable({
-          responsive: true,
-          lengthChange: false,
-          autoWidth: false,
-          destroy: true,
-          buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
-        })
-        .buttons()
-        .container()
-        .appendTo("#example1_wrapper .col-md-6:eq(0)");
-    },
     putAsyncData(data) {
       console.log(data);
       this.cvs = data;
@@ -126,10 +112,11 @@ export default {
     loadData() {
       axios.get(this.uri).then((response) => {
         let self = this;
-        $.when(this.putAsyncData(response.data.cvs)).then(function () {
-          self.tableInit();
-        });
+        $.when(this.putAsyncData(response.data.cvs));
       });
+    },
+    moment(date) {
+      return moment(date).format("DD-MMM-YYYY");
     },
     resetData() {
       (this.cv.first_name = ""),
