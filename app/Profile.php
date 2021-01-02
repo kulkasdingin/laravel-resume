@@ -16,9 +16,9 @@ class Profile extends Model
         return $this->belongsTo('App\Profile');
     }
 
-    public function profileAttributeLine()
+    public function ProfileAttributeLines()
     {
-        return $this->hasMany('App\ProfileAttributeLine');
+        return $this->hasMany('App\ProfileAttributeLine')->orderBy("order");
     }
 
     public function Cvs()
