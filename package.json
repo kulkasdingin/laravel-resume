@@ -26,6 +26,6 @@
     "dependencies": {
         "toastr": "^2.1.4",
         "vue-sweetalert2": "^4.1.1",
-        "vue-toastr-2": "0.0.10"
-    }
+        "vue-toastr-2": "0.0.10",
+        "moment": "^2.29.1"
 }
