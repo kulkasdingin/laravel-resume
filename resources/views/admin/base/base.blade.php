@@ -210,7 +210,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->segment(2) == 'profile' ? 'active' : '' }}">
+                            <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->segment(2) == 'profiles' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Profile
