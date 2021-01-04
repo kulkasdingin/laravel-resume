@@ -141,13 +141,19 @@
         },
         methods: {
             tableInit(){
-                $("#profiles-table").DataTable({
-                    "responsive": true, 
-                    "lengthChange": false, 
-                    "autoWidth": false,
-                    "destroy": true,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                // $("#profiles-table").DataTable({
+                //     "responsive": true,
+                //     "lengthChange": true,
+                //     "autoWidth": false,
+                //     "destroy": true,
+                //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                // }).buttons().container().appendTo('#profiles-table_wrapper .col-md-6:eq(0)');
+            },
+            successInit(message){                
+                    this.$toastr.success(message,'Success',{
+                    timeOut: 4000,
+                    progressBar: true
+                });
             },
             putAsyncData(data){
                 this.profiles = data;
@@ -157,8 +163,8 @@
                 .then(response=>{
                     let self = this
                     $.when(this.putAsyncData(response.data.profiles)).then(function(){
-                        self.tableInit();
-                        console.log('asd');
+                        // self.tableInit();
+                        $("#profiles-table").DataTable();
                     });
                 });
             },
@@ -197,7 +203,7 @@
                 .then(response=>{
                     this.loadData();
                     this.resetData();
-                    toastr.success(response.data.status);
+                    this.successInit(response.data.status);
                 })
                 .catch(error=>{
                     toastr.error(error.data);
@@ -214,7 +220,7 @@
         },
         mounted() {
             this.loadData();
-            console.log('Component mounted.')
+            console.log('Component mounted.');
         }
     }
 </script>
