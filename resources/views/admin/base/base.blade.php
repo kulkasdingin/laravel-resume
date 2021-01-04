@@ -21,6 +21,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('/assets/adminlte/dist/css/adminlte.min.css') }}">
     <!-- Custom style -->
     <link rel="stylesheet" href="{{ asset('/assets/custom/css/custom.css') }}">
+    <!-- Vue -->
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 </head>
 
 <body class="hold-transition sidebar-mini">

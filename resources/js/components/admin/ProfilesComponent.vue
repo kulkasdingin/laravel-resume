@@ -158,6 +158,7 @@
                     let self = this
                     $.when(this.putAsyncData(response.data.profiles)).then(function(){
                         self.tableInit();
+                        console.log('asd');
                     });
                 });
             },
