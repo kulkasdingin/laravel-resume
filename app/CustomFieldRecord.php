@@ -16,8 +16,8 @@ class CustomFieldRecord extends Model
         return $this->belongsTo('App\CustomFieldCategory');
     }
 
-    public function CustomFieldAttributeLineValues()
+    public function CustomFieldRecordAttributeLineValues()
     {
-        return $this->hasMany("App\CustomFieldAttributeLineValue");
+        return $this->hasMany("App\CustomFieldRecordAttributeLineValue");
     }
 }
