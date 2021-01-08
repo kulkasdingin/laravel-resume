@@ -16,7 +16,7 @@ class CvController extends Controller
      */
     public function index()
     {
-        $cvs = Cv::withoutTrashed()->with('customFieldCategories')->get();
+        $cvs = Cv::withoutTrashed()->with(['customFieldCategories', 'customFieldCategories.customFieldAttributeLines'])->get();
         return response()->json([
             'cvs'=> $cvs,
         ]);
@@ -66,8 +66,14 @@ class CvController extends Controller
      */
     public function show(Cv $cv)
     {
+        $id = $cv->id;
+        $data = CV::where('id', $id)->with([
+            'customFieldCategories', 
+            'customFieldCategories.customFieldAttributeLines', 
+            'customFieldCategories.customFieldRecords',
+            'customFieldCategories.customFieldRecords.customFieldRecordAttributeLineValues'])->get();
         return response()->json([
-            'cv'=> $cv,
+            'cv'=> $data->first(),
         ]);
     }
 
