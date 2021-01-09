@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ApiInvalidRequestData;
 use App\CustomFieldCategory;
+use App\CustomFieldAttributeLine;
+use App\CustomFieldRecord;
+use App\CustomFieldRecordAttributeLineValue;
+
 
 class CustomFieldCategoryController extends Controller
 {
@@ -16,7 +20,11 @@ class CustomFieldCategoryController extends Controller
      */
     public function index()
     {
-        $customFieldCategories = CustomFieldCategory::withoutTrashed()->get();
+        $customFieldCategories = CustomFieldCategory::withoutTrashed()->with([
+            'customFieldAttributeLines', 
+            'customFieldRecords',
+            'customFieldRecords.customFieldRecordAttributeLineValues'
+        ])->get();
         return response()->json([
             'customFieldCategories'=> $customFieldCategories,
         ]);
@@ -42,12 +50,48 @@ class CustomFieldCategoryController extends Controller
     {
         $data = $this->validateRequest($request);
 
-        $customFieldCategory = CustomFieldCategory::create($data);
+        // $customFieldCategory = CustomFieldCategory::create($data);
+
+        $customFieldAttributeLinesData = json_decode($request['customFieldAttributeLines']);
+        $customFieldRecordsData = json_decode($request['customFieldRecords']);
+
+        $customFieldAttributeLines = [];
+
+        // To do: Looping attribute lines
+        foreach($customFieldAttributeLinesData as $attrLine) {
+            // $attrLine->custom_field_category_id = $customFieldCategory['id'];
+            $attrLine->custom_field_category_id = 1;
+            // $validatedAttrLine = $this->validateAttrLineRequest($attrLine);
+            $validatedAttrLine = $attrLine;
+            // $newAttrLine = CustomFieldAttributeLine::create($validatedAttrLine);
+            array_push($customFieldAttributeLines, $validatedAttrLine);
+        }
+
+        $customFieldRecords = [];
+        
+        // To do: Looping records
+        foreach($customFieldRecordsData as $record) {
+
+            // Step 1: Assign row
+            // $record->custom_field_category_id = $customFieldCategory['id'];
+            $record->custom_field_category_id = 1;
+            // $validatedRecord = $this->validateRecordRequest($record);
+            $validatedRecord = $record; 
+            // $newAttrLine = CustomFieldAttributeLine::create($validatedAttrLine);
+            array_push($customFieldRecords, $validatedRecord);
+
+            // Step 2: Assign values (use second foreach) [TO DO]
+        }
 
         return response()->json([
-            'customFieldCategory'=>$customFieldCategory,
-            'status'=>"New custom field category has been created successfully",
+            'customFieldAttributeLines'=>$customFieldAttributeLines,
+            'customFieldRecords'=>$customFieldRecords
         ]);
+
+        // return response()->json([
+        //     'customFieldCategory'=>$customFieldCategory,
+        //     'status'=>"New custom field category has been created successfully",
+        // ]);
     }
 
     /**
@@ -115,6 +159,36 @@ class CustomFieldCategoryController extends Controller
             'order'=>'required',
             'is_active'=>'required',
             'cv_id'=>'required'
+        ]);
+
+        if ($validator->fails()){
+            throw(new ApiInvalidRequestData($validator->errors()));
+        }
+
+        return $validator->validated();
+    }
+
+    // Validate Attr Line
+    public function validateAttrLineRequest($request, $thisModel = null){
+        $validator = Validator::make($request, [
+            'nama'=>'required',
+            'order'=>'required',
+            'is_active'=>'required',
+            'custom_field_category_id'=>'required'
+        ]);
+
+        if ($validator->fails()){
+            throw(new ApiInvalidRequestData($validator->errors()));
+        }
+
+        return $validator->validated();
+    }
+
+    // Validate Record
+    public function validateRecordRequest($request, $thisModel = null){
+        $validator = Validator::make($request, [
+            'order'=>'required',
+            'custom_field_category_id'=>'required'
         ]);
 
         if ($validator->fails()){
