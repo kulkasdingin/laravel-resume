@@ -50,42 +50,69 @@ class CustomFieldCategoryController extends Controller
     {
         $data = $this->validateRequest($request);
 
-        // $customFieldCategory = CustomFieldCategory::create($data);
+        $customFieldCategory = CustomFieldCategory::create($data);
 
         $customFieldAttributeLinesData = json_decode($request['customFieldAttributeLines']);
         $customFieldRecordsData = json_decode($request['customFieldRecords']);
 
         $customFieldAttributeLines = [];
+        $customFieldRecords = [];
+        $customFieldValues = [];
 
         // To do: Looping attribute lines
         foreach($customFieldAttributeLinesData as $attrLine) {
-            // $attrLine->custom_field_category_id = $customFieldCategory['id'];
-            $attrLine->custom_field_category_id = 1;
-            // $validatedAttrLine = $this->validateAttrLineRequest($attrLine);
-            $validatedAttrLine = $attrLine;
-            // $newAttrLine = CustomFieldAttributeLine::create($validatedAttrLine);
-            array_push($customFieldAttributeLines, $validatedAttrLine);
+            $validatedAttrLine = $this->validateAttrLineRequest([
+                'nama' => $attrLine->nama,
+                'order' => $attrLine->order,
+                'is_active' => $attrLine->is_active,
+                'custom_field_category_id' => $customFieldCategory['id']
+            ]);
+            $newAttrLine = CustomFieldAttributeLine::create($validatedAttrLine);
+            array_push($customFieldAttributeLines, $newAttrLine);
         }
 
-        $customFieldRecords = [];
-        
         // To do: Looping records
         foreach($customFieldRecordsData as $record) {
 
             // Step 1: Assign row
             // $record->custom_field_category_id = $customFieldCategory['id'];
             $record->custom_field_category_id = 1;
-            // $validatedRecord = $this->validateRecordRequest($record);
-            $validatedRecord = $record; 
-            // $newAttrLine = CustomFieldAttributeLine::create($validatedAttrLine);
+            $validatedRecord = $this->validateRecordRequest([
+                "order" => $record->order,
+                "custom_field_category_id" => $record->custom_field_category_id
+            ]);
+            $newRecord = CustomFieldRecord::create($validatedRecord);
             array_push($customFieldRecords, $validatedRecord);
 
+            $valuesData = $record->custom_field_record_attribute_line_values;
+
             // Step 2: Assign values (use second foreach) [TO DO]
+            foreach($valuesData as $value) {
+                $matchAttrLine = [
+                    'custom_field_category_id' => $customFieldCategory['id'], 
+                    'nama' => $value->custom_field_attribute_line_id
+                ];
+
+                $customFieldAttrLineTarget = CustomFieldAttributeLine::where(
+                    $matchAttrLine)->get()->first();
+
+                $validatedValue = $this->validateValueRequest([
+                    "value" => $value->value, 
+                    "custom_field_record_id" => $newRecord['id'], 
+                    "custom_field_attribute_line_id" => $customFieldAttrLineTarget['id']
+                ]);
+
+                $newValue = CustomFieldRecordAttributeLineValue::create($validatedValue);
+
+                array_push($customFieldValues, $newValue);
+            }
         }
 
         return response()->json([
+            'customFieldCategory'=>$customFieldCategory,
             'customFieldAttributeLines'=>$customFieldAttributeLines,
-            'customFieldRecords'=>$customFieldRecords
+            'customFieldRecords'=>$customFieldRecords,
+            'values'=>$customFieldValues
         ]);
 
         // return response()->json([
@@ -189,6 +216,21 @@ class CustomFieldCategoryController extends Controller
         $validator = Validator::make($request, [
             'order'=>'required',
             'custom_field_category_id'=>'required'
+        ]);
+
+        if ($validator->fails()){
+            throw(new ApiInvalidRequestData($validator->errors()));
+        }
+
+        return $validator->validated();
+    }
+
+    // Validate Value
+    public function validateValueRequest($request, $thisModel = null){
+        $validator = Validator::make($request, [
+            'value'=>'nullable',
+            'custom_field_record_id'=>'required',
+            'custom_field_attribute_line_id'=>'required'
         ]);
 
         if ($validator->fails()){
