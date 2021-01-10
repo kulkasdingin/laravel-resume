@@ -75,11 +75,9 @@ class CustomFieldCategoryController extends Controller
         foreach($customFieldRecordsData as $record) {
 
             // Step 1: Assign row
-            // $record->custom_field_category_id = $customFieldCategory['id'];
-            $record->custom_field_category_id = 1;
             $validatedRecord = $this->validateRecordRequest([
                 "order" => $record->order,
-                "custom_field_category_id" => $record->custom_field_category_id
+                "custom_field_category_id" => $customFieldCategory['id']
             ]);
             $newRecord = CustomFieldRecord::create($validatedRecord);
             array_push($customFieldRecords, $validatedRecord);
@@ -109,10 +107,12 @@ class CustomFieldCategoryController extends Controller
         }
 
         return response()->json([
-            'customFieldCategory'=>$customFieldCategory,
-            'customFieldAttributeLines'=>$customFieldAttributeLines,
-            'customFieldRecords'=>$customFieldRecords,
-            'values'=>$customFieldValues
+            'customFieldCategory'=>CustomFieldCategory::where('id', $customFieldCategory['id'])->with([
+                'customFieldAttributeLines',
+                'customFieldRecords',
+                'customFieldRecords.customFieldRecordAttributeLineValues'
+            ])->get()->first(),
+            'status'=>"New custom field has been created"
         ]);
 
         // return response()->json([
