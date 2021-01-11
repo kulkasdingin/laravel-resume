@@ -70,7 +70,7 @@
       <button
         type="button"
         class="btn btn-primary col-6 offset-6 mt-3"
-        click="submit"
+        @click="submit"
       >
         Next section
       </button>
@@ -88,14 +88,16 @@ export default {
       newAttributeLine: "",
       highestAttributeOrder: 4,
       highestRecordOrder: 1,
+      apiUrl: "/admin/resource",
     };
   },
   methods: {
     toggleShowInputAttributeLine() {
       if (this.showInputAttributeLine == true) {
         this.addAttributeLine();
+      } else {
+        this.showInputAttributeLine = true;
       }
-      this.showInputAttributeLine = true;
     },
     addAttributeLine() {
       if (this.newAttributeLine != "") {
@@ -118,16 +120,63 @@ export default {
 
     submit() {
       let formData = new FormData();
-      formData.append("name", "Experience");
+      formData.append("nama", "Experience");
       formData.append("order", 1);
-      formData.append("cv_id", 1);
+      formData.append("cv_id", window.location.pathname.split("/")[4]);
+      formData.append("is_active", 1);
+
+      let customFieldAttributeLines = [];
+      this.attribute_lines.forEach((element, index) => {
+        let nama, order, is_active;
+        nama = element;
+        order = index + 1;
+        is_active = true;
+        let el = {
+          nama: nama,
+          order: order,
+          is_active: is_active,
+        };
+        customFieldAttributeLines.push(el);
+      });
+
+      formData.append(
+        "customFieldAttributeLines",
+        JSON.stringify(customFieldAttributeLines)
+      );
+
+      let customFieldRecords = [];
+      this.records.forEach((record, index) => {
+        let order, custom_field_record_attribute_line_values, compiledRecord;
+        order = index + 1;
+        compiledRecord = {
+          order: order,
+          custom_field_record_attribute_line_values: [],
+        };
+        record.custom_field_record_attribute_line_values.forEach(
+          (val, index) => {
+            let value, custom_field_attribute_line_id;
+            value = val;
+            custom_field_attribute_line_id = this.attribute_lines[index];
+            let el = {
+              value: value,
+              custom_field_attribute_line_id: custom_field_attribute_line_id,
+            };
+            compiledRecord["custom_field_record_attribute_line_values"].push(
+              el
+            );
+          }
+        );
+        customFieldRecords.push(compiledRecord);
+      });
+
+      formData.append("customFieldRecords", JSON.stringify(customFieldRecords));
 
       axios
-        .post(this.apiUrl.concat("/cvs"), formData)
+        .post(this.apiUrl.concat("/custom-field"), formData)
         .then((response) => {
-          const cv = response.data.cv;
+          const cv = response.data.customFieldCategory;
           console.log(cv);
-          window.location.href = "/admin/CV/new/" + cv.id + "/experience";
+          window.location.href = "/admin/CV/new/" + cv.cv_id + "/education";
         })
         .catch((error) => {
           console.log(error);
