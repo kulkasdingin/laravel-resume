@@ -38,55 +38,19 @@
 
     footer {
         text-align: center; } }
-    .typed-cursor {
-    opacity: 1;
-    font-weight: 100;
-    -webkit-animation: blink 0.7s infinite;
-    -moz-animation: blink 0.7s infinite;
-    -ms-animation: blink 0.7s infinite;
-    -o-animation: blink 0.7s infinite;
-    animation: blink 0.7s infinite; }
 
-    @-webkit-keyframes blink {
-    0% {
-        opacity: 1; }
-    50% {
-        opacity: 0; }
-    100% {
-        opacity: 1; } }
-    @-moz-keyframes blink {
-    0% {
-        opacity: 1; }
-    50% {
-        opacity: 0; }
-    100% {
-        opacity: 1; } }
-    @-ms-keyframes blink {
-    0% {
-        opacity: 1; }
-    50% {
-        opacity: 0; }
-    100% {
-        opacity: 1; } }
-    @-o-keyframes blink {
-    0% {
-        opacity: 1; }
-    50% {
-        opacity: 0; }
-    100% {
-        opacity: 1; } }
     .main-nav {
-    background: #f4f4f4;
-    padding-top: 23px; }
+        background: #f4f4f4;
+        padding-top: 23px; }
     .main-nav nav ul li a {
         color: #a7a7a7; }
     .main-nav nav ul li.active a {
         color: #4d4d4d; }
 
     .section.second {
-    margin-bottom: 90px; }
+        margin-bottom: 90px; }
     .section .container {
-    position: relative; }
+        position: relative; }
     .section .container:after {
         position: absolute;
         left: 20px; }
@@ -96,8 +60,8 @@
         position: relative; }
 
     .intro {
-    padding: 24px 0px 24px 0px;
-    overflow-x: hidden; }
+        padding: 24px 0px 24px 0px;
+        overflow-x: hidden; }
     .intro img {
         width: 81px;
         height: 81px;
@@ -114,36 +78,15 @@
     .intro h1 span {
         font-size: 47px; }
 
-    .work .work-list {
+    .cfield .cfield-list {
     margin-left: 0px; }
-    .work .work-list li {
-        list-style: none;
-        font-size: 0.9375em;
-        color: #8c8c8c; }
-        .work .work-list li a {
-        padding-bottom: 5px;
-        font-size: 1.1875em;
-        font-weight: 700;
-        text-decoration: none;
-        border-bottom: 1px solid #b3b3b3; }
-        .work .work-list li a:hover {
-            border-bottom: 1px solid #333333; }
-
-    .award .award-list {
-    margin-left: 0px; }
-    .award .award-list li:first-child {
-        font-size: 0.9375em;
-        color: #8c8c8c; }
-
-    .skills .skill-list {
-    margin-left: 0px; }
-    .skills .skill-list li:first-child {
-        font-size: 0.9375em;
-        color: #8c8c8c; }
+    .cfield .cfield-list li {
+        margin-bottom: 30px;
+        }    
 
     .quote {
-    padding: 20px 0px;
-    margin-top: 120px; }
+        padding: 20px 0px;
+        margin-top: 120px; }
     .quote h1 {
         margin: 100px 0px;
         padding: 40px 20px;
@@ -151,13 +94,13 @@
         color: #fff; }
 
     footer {
-  padding: 50px 0px 0px 0px; }
-  footer .social li {
-    display: inline;
-    margin-left: 20px; }
+        padding: 50px 0px 0px 0px; }
+    footer .social li {
+        display: inline;
+        margin-left: 20px; }
     footer .social li a {
-      font-size: 1.25em;
-      color: #999999; }
+        font-size: 1.25em;
+        color: #999999; }
 
 
 

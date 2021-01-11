@@ -22,7 +22,7 @@
 
         /* //-- yui-grids style overrides -- */
         body { font-family: Georgia; color: #444; }
-        #inner { padding: 10px 80px; margin: 80px auto; background: #f5f5f5; border: solid #666; border-width: 8px 0 2px 0; }
+        #inner { padding: 10px 80px; margin: auto; max-width:720px; background: #f5f5f5; border: solid #666; border-width: 8px 0 2px 0; }
         .yui-gf { margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #ccc; }
 
         /* //-- header, body, footer -- */
@@ -56,16 +56,10 @@
         a#pdf { display: block; float: left; background: #666; color: white; padding: 6px 50px 6px 12px; margin-bottom: 6px; text-decoration: none;  }
         a#pdf:hover { background: #222; }
 
-        .job { position: relative; margin-bottom: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc; }
-        .job h4 { position: absolute; top: 0.35em; right: 0 }
-        .job p { margin: 0.75em 0 3em 0; }
+        .cfield { position: relative; margin-bottom: 1em; padding-bottom: 1em; border-bottom: 1px solid #ccc; }
+        .cfield p { margin: 0.75em 0 3em 0; }
 
         .last { border: none; }
-        .skills-list ul { margin: 0; }
-        .skills-list li { margin: 3px 0; padding: 3px 0; }
-        .skills-list li span { font-size: 152%; display: block; margin-bottom: -2px; padding: 0 }
-        .talent { width: 32%; float: left }
-        .talent h2 { margin-bottom: 6px; }
 
         #srt-ttab { margin-bottom: 100px; text-align: center;  }
         #srt-ttab img.last { margin-top: 20px }
