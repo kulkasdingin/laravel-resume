@@ -1,6 +1,11 @@
 @extends('cv.base.base')
 
-@section('header')
+@section('style')
+
+<link rel="stylesheet" href="{{ asset('/assets/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/assets/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/assets/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
 <style scoped>
         /*
         ---------------------------------------------------------------------------------
@@ -67,16 +72,15 @@
         /* --// override to force 1/8th width grids -- */
         .yui-gf .yui-u{width:80.2%;}
         .yui-gf div.first{width:12.3%;}
+
+        .image {width: 50%; max-width:50%}
 </style>
 @endsection
 @section('header')
-<head>
 	<title>First Template</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" media="all" /> 
-</head>
 @endsection
 @section('content')
 <cv-template-first><cv-template-first>
