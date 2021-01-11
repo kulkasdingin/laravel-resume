@@ -18,7 +18,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::withoutTrashed()->with('cvs')->with('profileAttributeLines')->get();
+        $profiles = Profile::withoutTrashed()->with('cvs')->with('ProfileAttributeLines')->get();
         return response()->json([
             'profiles'=> $profiles,
         ]);
@@ -69,7 +69,7 @@ class ProfileController extends Controller
     public function show(Profile $profile)
     {
         $id = $profile->id;
-        $data = Profile::where('id', $id)->with(['cvs', 'profileAttributeLine'])->first(); 
+        $data = Profile::where('id', $id)->with(['cvs', 'ProfileAttributeLines'])->first(); 
         return response()->json([
             'profile'=> $data
         ]);
