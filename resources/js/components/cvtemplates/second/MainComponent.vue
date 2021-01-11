@@ -5,12 +5,27 @@
 	<div class="intro section" id="about">
 		<div class="container">
 			<p>Hi!, i'm a {{ cv.profession }}</p>
-			<div class="units-row units-split wrap">
-				<div class="unit-1000">
+			<div class="col-8 offset-2 text-center custom-col-image-wrapper custom-wrapper-1x1 p-0">
+				<template v-if="cv.photo">
+					<img id="profile-image" class="mx-auto img-circle custom-image-wrapped border-secondary p-1"
+						v-bind:src="'/storage/'+cv.photo"
+						alt="User profile picture"
+						style="border: 3px solid; transition: border-radius .3s ease">
+				</template>
+				<template v-else>
+					<img id="profile-image" class="mx-auto img-circle custom-image-wrapped border-secondary p-1"
+						v-bind:src="'https://img.icons8.com/carbon-copy/100/000000/no-image.png'"
+						alt="User profile picture"
+						style="border: 3px solid; transition: border-radius .3s ease">
+				</template>
+			</div>
+			<div class="row">
+				<div class="col-8">
 					<h1>{{ cv.first_name }} {{cv.last_name}}</h1>
 				</div>
-				<p>{{ cv.phone }} - {{ cv.email }}</p>
 			</div>
+			<p>{{ cv.phone }} - {{ cv.email }}</p>
+			<p>{{ cv.description }}</p>
 		</div>
 	</div>
 
