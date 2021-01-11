@@ -13,6 +13,7 @@
         <table id="cvs-table" class="table table-bordered table-hover">
           <thead>
             <tr>
+              <th>No.</th>
               <th>Id</th>
               <th>First Name</th>
               <th>Profession</th>
@@ -24,7 +25,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="cv in cvs" :key="cv.id">
+            <tr v-for="(cv, index) in cvs" :key="cv.id">
+              <td>{{ index + 1 }}</td>
               <td>{{ cv.id }}</td>
               <td>{{ cv.first_name }}</td>
               <td>{{ cv.profession }}</td>
@@ -52,7 +54,12 @@
               </td>
               <td class="align-content-center">
                 <a
-                  v-bind:href="'/CV/edit/' + cv.id"
+                  v-bind:href="'/admin/CV/detail/' + cv.id"
+                  class="btn btn-sm btn-info"
+                  >Detail</a
+                >
+                <a
+                  v-bind:href="'/admin/CV/edit/' + cv.id"
                   class="btn btn-sm btn-warning"
                   >Edit</a
                 >
@@ -67,11 +74,24 @@
                   >View Second Template</a
                 >
                 <!-- Deactive a cv -->
-                <a href="" class="btn btn-sm btn-danger">Deactive</a>
+                <button class="btn btn-sm btn-danger" @click="deleteCV(cv)">
+                  Deactive
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
+        <div
+          v-if="showDeleteSuccess"
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+          id="alertDeleteSuccess"
+        >
+          CV dengan id {{ lastDeleted.id }} berhasil dihapus!
+          <button type="button" class="close" @click="hideAlert()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -83,30 +103,25 @@ import moment from "moment";
 export default {
   data() {
     return {
-      cv: {
-        first_name: "",
-        last_name: "",
-        profession: "",
-        photo: "",
-        address: "",
-        email: "",
-        birth_date: "",
-        phone: "",
-        gender: "",
-        profile_id: "",
-        is_active: "",
-        is_protected: "",
-        updated_at: "",
-        created_at: "",
-      },
       cvs: [],
       profileState: [true, "Square"], // isCircle, InnerHtml
       uri: "/admin/resource/cvs",
+      showDeleteSuccess: false,
+      lastDeleted: "",
     };
   },
   methods: {
+    hideAlert() {
+      this.showDeleteSuccess = false;
+    },
+    deleteCV(cv) {
+      axios.delete(this.uri.concat("/" + cv.id)).then((reponse) => {
+        this.lastDeleted = cv;
+        this.loadData();
+        this.showDeleteSuccess = true;
+      });
+    },
     putAsyncData(data) {
-      console.log(data);
       this.cvs = data;
     },
     loadData() {
@@ -118,61 +133,9 @@ export default {
     moment(date) {
       return moment(date).format("DD-MMM-YYYY");
     },
-    resetData() {
-      (this.cv.first_name = ""),
-        (this.cv.last_name = ""),
-        (this.cv.profession = ""),
-        (this.cv.photo = ""),
-        (this.cv.address = ""),
-        (this.cv.email = ""),
-        (this.cv.birth_date = ""),
-        (this.cv.phone = ""),
-        (this.cv.gender = ""),
-        (this.cv.is_protected = ""),
-        (this.cv.profile_id = "");
-    },
-    sendNewData() {
-      let formData = new FormData();
-      let photo = $("#photo")[0].files[0];
-      formData.append("first_name", this.profile.first_name);
-      formData.append("last_name", this.profile.last_name);
-      formData.append("profession", this.profile.profession);
-      if (photo) {
-        formData.append("photo", photo);
-      }
-      formData.append("address", this.profile.address);
-      formData.append("email", this.profile.email);
-      formData.append("birth_date", this.profile.birth_date);
-      formData.append("phone", this.profile.phone);
-      formData.append("gender", this.profile.gender);
-      formData.append("user_id", 1);
-      axios
-        .post(this.uri, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          this.loadData();
-          this.resetData();
-          toastr.success(response.data.status);
-        })
-        .catch((error) => {
-          toastr.error(error.data);
-        });
-    },
-    changeImageProfileToSquare(event) {
-      $("#profile-image").toggleClass("img-circle");
-      if (this.profileState[0]) {
-        this.profileState = [false, "Circle"];
-      } else {
-        this.profileState = [true, "Square"];
-      }
-    },
   },
   mounted() {
     this.loadData();
-    console.log("Component mounted.");
   },
 };
 </script>
