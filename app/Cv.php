@@ -9,7 +9,7 @@ class Cv extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ["is_active", "is_protected", "profile_id", "first_name", "last_name", "profession", "photo", "address", "email", "birth_date", "phone", "gender", "password"];
+    protected $fillable = ["is_active", "is_protected", "profile_id", "first_name", "last_name", "profession", "photo", "address", "email", "birth_date", "phone", "gender", "password", "file_name"];
 
     protected $hidden = ["password"];
 

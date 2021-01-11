@@ -66,8 +66,10 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
+        $id = $profile->id;
+        $data = Profile::where('id', $id)->with(['cvs'])->get()->first(); 
         return response()->json([
-            'profile'=> $profile,
+            'profile'=> $data
         ]);
     }
 
