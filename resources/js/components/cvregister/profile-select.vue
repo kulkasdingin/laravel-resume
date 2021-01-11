@@ -16,7 +16,7 @@
                 <img
                   id="profile-image"
                   class="mx-auto img-fluid img-circle custom-image-wrapped border-secondary p-1"
-                  v-bind:src="profile.photo"
+                  :src="'/storage/' + profile.photo"
                   alt="User profile picture"
                   style="border: 1px solid; transition: border-radius 0.3s ease"
                 />
@@ -98,6 +98,7 @@
       <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header">
+            <h5 class="modal-title">Select profile</h5>
             <button
               type="button"
               class="close"
@@ -108,7 +109,7 @@
             </button>
           </div>
           <div class="modal-body text-center">
-            <h2>Confirm profile as base?</h2>
+            <p>Select profile as a base?</p>
           </div>
           <div class="modal-footer">
             <button
@@ -120,7 +121,7 @@
             >
               No
             </button>
-            <a v-bind:href="'/admin/CV/new/exp'" class="btn btn-success">
+            <a v-bind:href="'/admin/CV/new/identity'" class="btn btn-success">
               Yes
             </a>
           </div>
