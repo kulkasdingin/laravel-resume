@@ -20,7 +20,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="profile in profiles" :key="profile.id">
+                            <tr v-for="(profile,index) in profiles" :key="profile.id">
                                 <td>{{ profile.id }}</td>
                                 <td>{{ profile.first_name }}</td>
                                 <td>{{ profile.last_name }}</td>
@@ -44,8 +44,8 @@
                                     </template>
                                 </td>
                                 <td class="align-content-center">
-                                    <a href="" class="btn btn-sm btn-primary">View</a>
-                                    <a href="" class="btn btn-sm btn-danger">Delete</a>
+                                    <a :href="'/admin/profile/'+profile.id" class="btn btn-sm btn-primary">View</a>
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-danger" @click="deleteData(index)">Delete</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="form-group">
                         <label for="birth_date">Birth Date</label>
-                        <input type="date" class="form-control" id="birth_date">
+                        <input type="date" class="form-control" id="birth_date" v-model="profile.birth_date">
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
@@ -141,13 +141,19 @@
         },
         methods: {
             tableInit(){
-                $("#profiles-table").DataTable({
-                    "responsive": true, 
-                    "lengthChange": false, 
-                    "autoWidth": false,
-                    "destroy": true,
-                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                // $("#profiles-table").DataTable({
+                //     "responsive": true,
+                //     "lengthChange": true,
+                //     "autoWidth": false,
+                //     "destroy": true,
+                //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                // }).buttons().container().appendTo('#profiles-table_wrapper .col-md-6:eq(0)');
+            },
+            successInit(message){                
+                    this.$toastr.success(message,'Success',{
+                    timeOut: 4000,
+                    progressBar: true
+                });
             },
             putAsyncData(data){
                 this.profiles = data;
@@ -157,7 +163,8 @@
                 .then(response=>{
                     let self = this
                     $.when(this.putAsyncData(response.data.profiles)).then(function(){
-                        self.tableInit();
+                        // self.tableInit();
+                        $("#profiles-table").DataTable();
                     });
                 });
             },
@@ -196,10 +203,36 @@
                 .then(response=>{
                     this.loadData();
                     this.resetData();
-                    toastr.success(response.data.status);
+                    this.successInit(response.data.status);
                 })
                 .catch(error=>{
                     toastr.error(error.data);
+                });
+            },
+            deleteData(index){
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel',
+                    reverseButtons: true,
+                }).then((result) =>{
+                    if (result.isConfirmed){
+                        axios.delete(this.uri+"/"+this.profiles[index].id)
+                        .then(response => {
+                            this.$delete(this.profiles, index);
+                            this.$swal({
+                                title: 'Deleted!',
+                                text: 'Profile has been successfully deleted',
+                                icon: 'success'
+                            })
+                            toastr.success('Profile with ID ' + this.profiles[index].id + ' has been successfully deleted')
+                        }).catch(error=>{
+                            toastr.error(error.data);
+                        })
+                    }
                 });
             },
             changeImageProfileToSquare(event) {
@@ -213,7 +246,7 @@
         },
         mounted() {
             this.loadData();
-            console.log('Component mounted.')
+            console.log('Component mounted.');
         }
     }
 </script>

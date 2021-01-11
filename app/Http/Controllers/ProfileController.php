@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ApiInvalidRequestData;
 use App\Profile;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -67,7 +68,7 @@ class ProfileController extends Controller
     public function show(Profile $profile)
     {
         $id = $profile->id;
-        $data = Profile::where('id', $id)->with(['cvs'])->get()->first(); 
+        $data = Profile::where('id', $id)->with(['cvs', 'profileAttributeLine'])->first(); 
         return response()->json([
             'profile'=> $data
         ]);
@@ -91,25 +92,51 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, Profile $profile) // Not a good practice, need to divide the function to as micro as possible
     {
-        $data = $this->validateRequest($request);
+        if ($request->status == 'update-profile') {
+            $data = $this->validateRequest($request);
 
-        // Todo if fotonya didelete
-        if ($request->file('photo')) {
-            $photo = $request->file('photo')->store('uploads/profile/photo','public');
+            $profile->update($data);
 
-            $data['photo'] = $photo;
+            return response()->json([
+                'profile'=>$profile,
+                'status'=>"Profile has been updated successfully",
+            ]);
         } else {
-            unset($data['photo']);
-        }
+            if ($request->status == 'update-photo') {
+                $data = $this->validatePhotoRequest($request);
+                $photo = $request->file('photo')->store('uploads/profile/photo','public');
+                $data['photo'] = $photo;
 
-        $profile->update($data);
+                if ($profile->photo) {
+                    unlink(public_path('storage/'.$profile->photo));
+                }
+                $profile->update($data);
 
-        return response()->json([
-            'profile'=>$profile,
-            'status'=>"Profile has been updated successfully",
-        ]);
+                return response()->json([
+                    'profile'=>$profile,
+                    'status'=>"Photo Profile has been updated successfully",
+                ]);
+            } else {
+                if($profile->photo) {
+                    unlink(public_path('storage/'.$profile->photo));
+                    $data['photo'] = null;
+                    $profile->update($data);
+
+                    return response()->json([
+                        'profile'=>$profile,
+                        'status'=>"Photo Profile has been removed successfully",
+                    ]);
+                } else {
+                    return response()->json([
+                        'profile'=>$profile,
+                        'error' => true,
+                        'status'=>"Fail to remove photo profile since there isn't one you dummy dum dum",
+                    ]);
+                }
+            }
+        }        
     }
 
     /**
@@ -133,13 +160,24 @@ class ProfileController extends Controller
             'first_name'=>'required',
             'last_name'=>'required',
             'profession'=>'required',
-            'photo'=>'nullable|image|mimes:jpeg,jpg,bmp,png|max:2000',
             'address'=>'nullable',
             'email'=>'nullable',
             'birth_date'=>'nullable',
             'phone'=>'nullable',
             'gender'=>'nullable',
             'user_id'=>'required'
+        ]);
+
+        if ($validator->fails()){
+            throw(new ApiInvalidRequestData($validator->errors()));
+        }
+
+        return $validator->validated();
+    }
+
+    public function validatePhotoRequest($request, $thisModel = null){
+        $validator = Validator::make($request->all(), [
+            'photo'=>'nullable|image|mimes:jpeg,jpg,bmp,png|max:2000',
         ]);
 
         if ($validator->fails()){
