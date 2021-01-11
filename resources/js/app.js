@@ -48,6 +48,7 @@ Vue.component('cv-register-profile-select', require('./components/cvregister/pro
 Vue.component('cv-register-fill-identity', require('./components/cvregister/fill-identity.vue').default);
 Vue.component('cv-register-fill-experience', require('./components/cvregister/fill-experience.vue').default);
 Vue.component('cv-register-fill-education', require('./components/cvregister/fill-education.vue').default);
+Vue.component('cv-register-fill-skill', require('./components/cvregister/fill-skill.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
