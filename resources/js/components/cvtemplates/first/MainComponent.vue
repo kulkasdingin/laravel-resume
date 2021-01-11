@@ -1,8 +1,23 @@
 <template>
+
 <div id="doc2" v-if="cvDataLoaded" class="yui-t7">
 	<div id="inner">
 		<div id="hd">
 			<div class="yui-gc">
+				<div class="image">
+					<template v-if="cv.photo">
+						<img id="profile-image" class="image"
+							v-bind:src="'/storage/'+cv.photo"
+							alt="User profile picture"
+							style="border: 3px solid; transition: border-radius .3s ease">
+					</template>
+					<template v-else>
+						<img id="profile-image" class="image"
+							v-bind:src="'https://img.icons8.com/carbon-copy/100/000000/no-image.png'"
+							alt="User profile picture"
+							style="border: 3px solid; transition: border-radius .3s ease">
+					</template>
+                </div>
 				<div class="yui-u first">
 					<h1>{{ cv.first_name }} {{ cv.last_name }}</h1>
 					<h2>{{ cv.profession }}</h2>
@@ -11,6 +26,9 @@
 				<div class="yui-u">
 					<div class="contact-info">
 						<p>{{ cv.phone }} - {{ cv.email }}</p>
+					</div><!--// .contact-info -->
+					<div class="contact-info">
+						<p>{{ cv.description }}</p>
 					</div><!--// .contact-info -->
 				</div>
 			</div><!--// .yui-gc -->

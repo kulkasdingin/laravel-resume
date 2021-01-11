@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserAttributeLine extends Model
+class ProfileAttributeLine extends Model
 {
     use SoftDeletes;
 
