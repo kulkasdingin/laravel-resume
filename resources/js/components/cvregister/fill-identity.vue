@@ -42,15 +42,52 @@
       </div>
       <div class="form-group">
         <label for="photo">Photo</label>
-        <div v-if="profile.photo != null && previewImage == null">
-          <img
-            v-bind:src="'/storage/' + profile.photo"
-            v-bind:style="imgSize"
+        <div
+          v-if="use_profile_photo == 0"
+          class="form-check form-check-inline ml-3"
+        >
+          <input
+            type="checkbox"
+            @click="useProfilePhoto"
+            class="form-check-input"
           />
+          <label class="form-check-label" for="exampleCheck1"
+            >Use profile image</label
+          >
+          <!-- <button @click="useProfilePhoto">Use profile image</button> -->
         </div>
-        <div v-if="previewImage != null">
-          <img v-bind:src="previewImage" v-bind:style="imgSize" />
+        <div
+          v-if="
+            profile.photo != null &&
+            previewImage == null &&
+            use_profile_photo == 1
+          "
+          class="col-md-5 row"
+        >
+          <div class="col-md-12">
+            <img
+              v-bind:src="'/storage/' + profile.photo"
+              v-bind:style="imgSize"
+            />
+          </div>
+          <div class="col-md-4 mx-auto">
+            <button @click="removeImage" class="btn btn-outline-secondary">
+              Remove Image
+            </button>
+          </div>
         </div>
+
+        <div v-if="previewImage != null" class="col-md-5 row">
+          <div class="col-md-12">
+            <img v-bind:src="previewImage" v-bind:style="imgSize" />
+          </div>
+          <div class="col-md-4 mx-auto">
+            <button @click="removeImage" class="btn btn-outline-secondary">
+              Remove Image
+            </button>
+          </div>
+        </div>
+
         <div class="custom-file">
           <input
             class="form-control-file"
@@ -134,9 +171,21 @@ export default {
       apiUrl: "/admin/resource",
       profile: [],
       idProf: "",
+      use_profile_photo: false,
+      cv_photo: null,
     };
   },
   methods: {
+    useProfilePhoto() {
+      this.use_profile_photo = true;
+      this.cv_photo = null;
+      this.previewImage = null;
+    },
+    removeImage() {
+      this.previewImage = null;
+      this.use_profile_photo = false;
+      this.cv_photo = null;
+    },
     putAsyncData(data) {
       this.profile = data;
       this.profile.profile_id = this.idProf;
@@ -157,12 +206,18 @@ export default {
       reader.onload = (e) => {
         this.previewImage = e.target.result;
       };
-      this.profile.photo = image;
+      this.use_profile_photo = false;
+      this.cv_photo = image;
     },
     submit() {
       let formData = new FormData();
 
-      formData.append("photo", this.profile.photo);
+      if (this.previewImage != null) {
+        formData.append("photo", this.cv_photo);
+      } else if (this.use_profile_photo == true) {
+        formData.append("use_profile_photo", 1);
+      }
+
       formData.append("first_name", this.profile.first_name);
       formData.append("last_name", this.profile.last_name);
       formData.append("profession", this.profile.profession);
