@@ -45,6 +45,8 @@ Vue.component('cv-template-second',require('./components/cvtemplates/second/Main
  * Daftar CV baru
  */
 Vue.component('cv-register-profile-select', require('./components/cvregister/profile-select.vue').default);
+Vue.component('cv-register-fill-identity', require('./components/cvregister/fill-identity.vue').default);
+Vue.component('cv-register-fill-experience', require('./components/cvregister/fill-experience.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
