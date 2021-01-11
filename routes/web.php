@@ -46,6 +46,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         });
     });
 
+    Route::get('/profile/{id_profile}', 'Admin\AdminController@profileDetail')->name('profile-detail');
+
+
     Route::prefix('resource')->name('resource.')->group(function () {
         Route::resources([
             'profiles' => ProfileController::class,
