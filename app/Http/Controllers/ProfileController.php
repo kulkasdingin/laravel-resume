@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ApiInvalidRequestData;
 use App\Profile;
+use App\ProfileAttributeLine;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -153,6 +154,65 @@ class ProfileController extends Controller
             'profile'=>$profile,
             'status'=>"Profile has been deleted successfully",
         ]);
+    }
+
+    public function addProfileAttributeLine(Request $request, $id_profile)
+    {
+        $data = $this->validateAttributeLine($request->all());
+        $data['profile_id'] = $id_profile;
+        
+        $profile_attribute_line = ProfileAttributeLine::create($data);
+        
+        return response()->json([
+            'data' => $profile_attribute_line,
+            'response' => 'Profile Attribute Line has been created successfully'
+        ]);
+
+    }
+
+    public function updateProfileAttributeLine(Request $request, $id_profile)
+    {
+        $profile_attribute_lines = json_decode($request->profile_attribute_lines);
+        $temp = [];
+        foreach ($profile_attribute_lines as $profile_attribute_line){
+            $data = $this->validateAttributeLine((array) $profile_attribute_line);
+
+            $attribute_line = ProfileAttributeLine::where('id', $profile_attribute_line->id)->first();
+            $attribute_line->update($data);
+            array_push($temp, $data);
+        }
+        return response()->json([
+            'status' => 'Profile Attribute Lines has been updated successfully',
+            'data'=>$temp
+        ]);
+    }
+
+    public function deleteProfileAttributeLine(Request $request, $id_profile)
+    {
+        $profile_attribute_lines_id = json_decode($request->profile_attribute_lines_id);
+        $temp = [];
+        foreach ($profile_attribute_lines_id as $id){
+            ProfileAttributeLine::where('id', $id)->delete();
+            array_push($temp, $id);
+        }
+        return response()->json([
+            'status' => 'Profile Attribute Lines ID '.implode(",", $temp).' has been deleted successfully',
+            'data'=>$temp
+        ]);
+    }
+
+    public function validateAttributeLine($arr, $thisModel = null){
+        $validator = Validator::make($arr, [
+            'name'=>'required',
+            'value'=>'required',
+            'order'=>'required'
+        ]);
+
+        if ($validator->fails()){
+            throw(new ApiInvalidRequestData($validator->errors()));
+        }
+
+        return $validator->validated();
     }
 
     public function validateRequest($request, $thisModel = null){

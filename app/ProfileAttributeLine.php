@@ -9,7 +9,7 @@ class ProfileAttributeLine extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ["name", "value", "order", "user_id", "cv_id"];
+    protected $fillable = ["name", "value", "order", "profile_id", "cv_id"];
 
     public function Profile()
     {

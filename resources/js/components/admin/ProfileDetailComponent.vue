@@ -186,12 +186,15 @@
             <div class="card card-outline card-secondary">
                 <div class="card-header">
                     <h1 class="card-title">Profile Attribute Line</h1>
-                    <button id="toggle-edit-attribute-line-button" class="btn btn-sm btn-success float-right" @click="toggleEditAttributeLine()">Edit</button>
-                    <button id="trigger-update-attribute-line-button" class="btn btn-sm btn-primary float-right ml-1" style="display:none" @click="triggerUpdateAttributeLine()">Save</button>
+                    <button id="toggle-edit-attribute-line-button" class="btn btn-sm btn-success float-right ml-1" @click="toggleEditAttributeLine()">Edit</button>
+                    <button id="toggle-add-attribute-line-button" class="btn btn-sm btn-primary float-right"  data-toggle="modal" data-target="#modal-add-new">Add</button>
+                    <button id="toggle-cancel-add-attribute-line-button" class="btn btn-sm btn-secondary float-right" style="display:none" @click="toggleAddAttributeLine()">Cancel</button>
+                    <button id="trigger-update-attribute-line-button" class="btn btn-sm btn-primary float-right ml-1" :style="profileAttributeLineTrashList.length == 0 ? isEditAttributeLine == true ? '' : 'display:none' : 'display:none'" @click="triggerUpdateAttributeLine()">Save</button>
+                    <button v-if="profileAttributeLineTrashList.length!=0" class="btn btn-sm btn-danger float-right ml-1" :style="profileAttributeLineTrashList.length == 0 ? 'display:none' : ''" @click="triggerDeleteAttributeLine()">Delete selected</button>
                     <button id="toggle-cancel-edit-attribute-line-button" class="btn btn-sm btn-secondary float-right" style="display:none" @click="toggleEditAttributeLine()">Cancel</button>
                 </div>
                 <div class="card-body">
-                    <div id="profile-attribute-line-data" class="row" style="display:none">
+                    <div id="profile-attribute-line-data" class="row">
                         <div class="col-md-12">
                             <span class="font-weight-bold">Attribute Line</span>
                         </div>
@@ -199,7 +202,7 @@
                             <template v-if="profile.profile_attribute_line.length">
                                 <template v-for="attributeLine in profile.profile_attribute_line">
                                     <div class="col-md-12" :key="attributeLine.id">
-                                        <span class="font-weight-normal">{{ attributeLine.name }}</span>
+                                        <span class="font-weight-normal">{{ attributeLine.name }}</span> <span class="float-right">Order {{attributeLine.order}}</span>
                                         <h5>{{ attributeLine.value }}</h5>
                                     </div>
                                 </template>
@@ -211,26 +214,34 @@
                             </template>
                         </template>
                     </div>
-                    <div id="profile-attribute-line-edit" class="row" >
+                    <div id="profile-attribute-line-edit" class="row" style="display:none">
                         <template v-if="dataLoaded">
-                            <template v-if="updatedProfileAttributeLine.length">
-                                <template v-for="attributeLine in updatedProfileAttributeLine">
-                                    <div class="col-12 col-md-5" :key="attributeLine.id">
+                            <template v-if="updateAttributeLine.length">
+                                <template v-for="attributeLine in updateAttributeLine">
+                                    <div class="col-12 col-md-4">
                                         <div class="form-group">
                                             <label for="address">Name</label>
-                                            <textarea type="text" class="form-control" id="address" placeholder="Enter address" v-model="attributeLine.address"></textarea>
+                                            <input type="text" class="form-control" placeholder="Enter address" v-model="attributeLine.name"></input>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-5" :key="attributeLine.id">
+                                    <div class="col-12 col-md-4">
                                         <div class="form-group">
                                             <label for="address">Value</label>
-                                            <textarea type="text" class="form-control" id="address" placeholder="Enter address" v-model="attributeLine.address"></textarea>
+                                            <input type="text" class="form-control" placeholder="Enter address" v-model="attributeLine.value"></input>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-1" :key="attributeLine.id">
+                                    <div class="col-12 col-md-2">
                                         <div class="form-group">
                                             <label for="address">Order</label>
-                                            <textarea type="text" class="form-control" id="address" placeholder="Enter address" v-model="attributeLine.address"></textarea>
+                                            <input type="number" class="form-control" placeholder="Enter address" v-model="attributeLine.order"></input>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2">
+                                        <div class="form-group">
+                                            <label for="address">Delete</label>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input delete-checked" @change="triggerToTrash(attributeLine.id)" style="cursor:pointer">
+                                            </div>
                                         </div>
                                     </div>
                                 </template>
@@ -245,6 +256,46 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modal-add-new">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add new Attribute Line</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="resetNewProfileAttributeLineData">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label for="first_name">Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Enter name" v-model="newAttributeLine.name">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label for="last_name">Value <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Enter value" v-model="newAttributeLine.value">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label for="profession">Order <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" placeholder="Enter order" v-model="newAttributeLine.order">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button id="close-modal" type="button" class="btn btn-default" data-dismiss="modal" aria-label="close" @click="resetNewProfileAttributeLineData">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="sendNewProfileAttributeLine" data-dismiss="modal" aria-label="close">Create new profile</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     </div>
 </template>
 
@@ -258,7 +309,9 @@
                 isEditAttributeLine: false,
                 profile:{},
                 updateProfile:{},
-                updatedProfileAttributeLine:[],
+                updateAttributeLine:[],
+                newAttributeLine:{},
+                profileAttributeLineTrashList: [],
                 profileState: [true, 'Square'], // isCircle, InnerHtml
                 uri: '/admin/resource/profiles/'+this.profileId,
             }
@@ -269,7 +322,6 @@
                 .then(response=>{
                     this.profile = response.data.profile;
                     this.dataLoaded = true;
-                    console.log(this.profile);
                 });
             },
             updatePhotoProfile(){
@@ -298,8 +350,6 @@
             sendUpdateProfile(){
                 let formData = new FormData();
 
-                console.log(this.updateProfile)
-
                 formData.append("_method", 'PATCH');
 
                 formData.append('status', 'update-profile');
@@ -325,6 +375,70 @@
                     this.toggleEdit();
                 });
             },
+            sendUpdateProfileAttributeLine(){
+                let formData = new FormData();
+
+                formData.append("_method", 'PATCH');
+
+                formData.append('profile_attribute_lines', JSON.stringify(this.updateAttributeLine));
+
+                axios.post(this.uri+'/profile-attribute-line', formData, {
+                    headers: {
+                        'Description-Type': 'multipart/form-data'
+                    }
+                }).then(response=>{
+                    this.loadData();
+                    this.successInit(response.data.status);
+                    this.toggleEditAttributeLine();
+                }).catch(error=>{
+                    for (var key in error.response.data.detail){
+                        this.failInit(error.response.data.detail[key])
+                    }
+                });
+            },
+            sendDeleteProfileAttributeLine(){
+                let formData = new FormData();
+
+                formData.append("_method", 'DELETE');
+
+                formData.append('profile_attribute_lines_id', JSON.stringify(this.profileAttributeLineTrashList));
+
+                axios.post(this.uri+'/profile-attribute-line', formData, {
+                    headers: {
+                        'Description-Type': 'multipart/form-data'
+                    }
+                }).then(response=>{
+                    this.loadData();
+                    this.successInit(response.data.status);
+                    this.toggleEditAttributeLine();
+                }).catch(error=>{
+                    for (var key in error.response.data.detail){
+                        this.failInit(error.response.data.detail[key])
+                    }
+                });
+            },
+            sendNewProfileAttributeLine(){
+                let formData = new FormData();
+
+                formData.append('name', this.newAttributeLine.name);
+                formData.append('value', this.newAttributeLine.value);
+                formData.append('order', this.newAttributeLine.order);
+                formData.append('profile_id', this.profileId);
+
+                axios.post(this.uri+'/profile-attribute-line', formData, {
+                    headers: {
+                        'Description-Type': 'multipart/form-data'
+                    }
+                }).then(response=>{
+                    this.loadData();
+                    this.successInit(response.data.status);
+                    this.resetNewProfileAttributeLineData();
+                }).catch(error=>{
+                    for (var key in error.response.data.detail){
+                        this.failInit(error.response.data.detail[key])
+                    }
+                });
+            },
             triggerUpdateProfile(){
                 this.$swal({
                     title: 'Are you sure?',
@@ -340,8 +454,41 @@
                     }
                 });
             },
+            triggerUpdateAttributeLine(){
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "Previous data will be replaced with current data",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel',
+                    reverseButtons: true,
+                }).then((result)=>{
+                    if (result.isConfirmed){
+                        this.sendUpdateProfileAttributeLine();
+                    }
+                });
+            },
+            triggerDeleteAttributeLine(){
+                this.$swal({
+                    title: 'Are you sure?',
+                    text: "Data will be deleted (soft deleted though)",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel',
+                    reverseButtons: true,
+                }).then((result)=>{
+                    if (result.isConfirmed){
+                        this.sendDeleteProfileAttributeLine();
+                    }
+                });
+            },
             resetUpdateProfileData(){
                 this.updateProfile = {};
+            },
+            resetNewProfileAttributeLineData(){
+                this.newAttributeLine = {};
             },
             openPhotoProfileInput(){
                 $('#photo-profile-input-file').click()
@@ -403,23 +550,34 @@
             },
             toggleEditAttributeLine(){
                 if(this.isEditAttributeLine){
-                    $('#attribute-line-data').show('slow');
-                    $('#attribute-line-edit').hide('slow');
+                    $('#profile-attribute-line-data').show('slow');
+                    $('#profile-attribute-line-edit').hide('slow');
                     $('#toggle-edit-attribute-line-button').show();
-                    $('#toggle-cancel-attribute-line-edit-button').hide();
+                    $('#toggle-add-attribute-line-button').show();
+                    $('#toggle-cancel-edit-attribute-line-button').hide();
                     $('#trigger-update-attribute-line-button').hide();
                     this.isEditAttributeLine = false;
+                    this.profileAttributeLineTrashList = [];
+                    $('.delete-checked').prop('checked', false);
                 } else {
-                    this.updateProfile = JSON.parse(JSON.stringify(this.profile, function(key,val){
-                        return (val == null) ? "" : val
-                    }));
-                    $('#attribute-line-data').hide('slow');
-                    $('#attribute-line-edit').show('slow');
-                    $('#toggle-edit-attribute-line-button').hide();
-                    $('#toggle-cancel-attribute-line-edit-button').show();
-                    $('#trigger-update-attribute-line-button').show();
-                    this.isEditAttributeLine = true;
+                    let self = this;
+                    $.when(this.updateAttributeLine = JSON.parse(JSON.stringify(this.profile.profile_attribute_line))).then(
+                        function(){
+                            $('#profile-attribute-line-data').hide('slow');
+                            $('#profile-attribute-line-edit').show('slow');
+                            $('#toggle-edit-attribute-line-button').hide();
+                            $('#toggle-add-attribute-line-button').hide();
+                            $('#toggle-cancel-edit-attribute-line-button').show();
+                            $('#trigger-update-attribute-line-button').show();
+                            self.isEditAttributeLine = true;
+                        }
+                    )
                 }
+            },
+            triggerToTrash(id){
+                let index = this.profileAttributeLineTrashList.indexOf(id);
+                if (index<0) this.profileAttributeLineTrashList.push(id);
+                else this.profileAttributeLineTrashList.splice(index,1);
             }
         },
         mounted() {
