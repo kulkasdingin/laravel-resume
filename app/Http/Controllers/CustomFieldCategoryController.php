@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ApiInvalidRequestData;
+use App\Exceptions\ApiResourceNotFound;
 use App\CustomFieldCategory;
 use App\CustomFieldAttributeLine;
 use App\CustomFieldRecord;
@@ -48,10 +49,6 @@ class CustomFieldCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json([
-            'a' => $request['customFieldAttributeLines']
-        ]);
-
         $data = $this->validateRequest($request);
 
         $customFieldCategory = CustomFieldCategory::create($data);
@@ -126,10 +123,16 @@ class CustomFieldCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CustomFieldCategory $customFieldCategory)
+    public function show(int $id)
     {
         return response()->json([
-            'customFieldCategory'=> $customFieldCategory,
+            'customFieldCategory'=> CustomFieldCategory::where('id', $id)->with([
+                'customFieldAttributeLines',
+                'customFieldRecords',
+                'customFieldRecords.customFieldRecordAttributeLineValues'
+            ])->firstOr(function() {
+                throw(new ApiResourceNotFound('Custom Field with specified ID cannot be found'));
+            }),
         ]);
     }
 
@@ -153,7 +156,9 @@ class CustomFieldCategoryController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $customFieldCategory = CustomFieldCategory::where('id', $id)->get()->first();
+        $customFieldCategory = CustomFieldCategory::where('id', $id)->firstOr(function() {
+            throw new ApiResourceNotFound("Custom Field with specified ID cannot be found");
+        });
 
         $data = $this->validateRequest($request);
 
@@ -270,16 +275,6 @@ class CustomFieldCategoryController extends Controller
             ])->get()->first(),
             'status'=>"Custom field has been updated"
         ]);
-
-
-        // // $data = $this->validateRequest($request);
-
-        // // $customFieldCategory->update($data);
-
-        // // return response()->json([
-        // //     'customFieldCategory'=>$customFieldCategory,
-        // //     'status'=>"Custom field category has been updated successfully",
-        // // ]);
     }
 
     /**
@@ -288,9 +283,26 @@ class CustomFieldCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CustomFieldCategory $customFieldCategory)
+    public function destroy(int $id)
     {
+        $customFieldCategory = CustomFieldCategory::where('id', $id)->firstOr(function() {
+            throw(new ApiResourceNotFound("Custom Field with specified ID cannot be found"));
+        });
+
         $customFieldCategory->delete();
+
+        CustomFieldAttributeLine::where('custom_field_category_id', $id)->delete();
+
+        $customFieldRecords = CustomFieldRecord::where('custom_field_category_id', $id)->with([
+            'customFieldRecordAttributeLineValues'
+        ])->get();
+
+        foreach($customFieldRecords as $record) {
+            foreach($record['customFieldRecordAttributeLineValues'] as $value) {
+                $value->delete();
+            }
+            $record->delete();
+        }
 
         return response()->json([
             'customFieldCategory'=>$customFieldCategory,
