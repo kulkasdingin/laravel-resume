@@ -128,19 +128,6 @@ export default {
     moment(date) {
       return moment(date).format("DD-MMM-YYYY");
     },
-    resetData() {
-      (this.cv.first_name = ""),
-        (this.cv.last_name = ""),
-        (this.cv.profession = ""),
-        (this.cv.photo = ""),
-        (this.cv.address = ""),
-        (this.cv.email = ""),
-        (this.cv.birth_date = ""),
-        (this.cv.phone = ""),
-        (this.cv.gender = ""),
-        (this.cv.is_protected = ""),
-        (this.cv.profile_id = "");
-    },
   },
   mounted() {
     this.loadData();
