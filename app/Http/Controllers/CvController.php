@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ApiInvalidRequestData;
 use App\Cv;
+use App\Profile;
 
 class CvController extends Controller
 {
@@ -46,6 +47,9 @@ class CvController extends Controller
             $photo = $request->file('photo')->store('uploads/cv/photo','public');
 
             $data['photo'] = $photo;
+        } else if($request->use_profile_photo == true){
+            $profile = Profile::findOrFail($request->profile_id);
+            $data["photo"] = $profile->photo;
         } else {
             unset($data['photo']);
         }
@@ -132,7 +136,8 @@ class CvController extends Controller
         ]);
     }
 
-    public function validateRequest($request, $thisModel = null){
+    public function validateRequest(Request $request, $thisModel = null){
+        
         $validator = Validator::make($request->all(), [
             'first_name'=>'required',
             'last_name'=>'required',
@@ -146,9 +151,10 @@ class CvController extends Controller
             'password'=>'nullable',
             'is_active'=>'required',
             'is_protected'=>'required',
-            'profile_id'=>'required'
-        ]);
-
+            'profile_id'=>'required',
+            'use_profile_photo' => 'integer|nullable'
+        ]); 
+        
         if ($validator->fails()){
             throw(new ApiInvalidRequestData($validator->errors()));
         }
