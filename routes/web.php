@@ -39,6 +39,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
             Route::get("/{id}/experience", 'Admin\ManageCVController@fillExperience')->name("experiece");
 
             Route::get("/{id}/education", 'Admin\ManageCVController@fillEducation')->name("education");
+
+            Route::get("/{id}/skill", 'Admin\ManageCVController@fillSkill')->name("skill");
         });
     });
 
