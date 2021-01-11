@@ -30,10 +30,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
         Route::get("", 'Admin\AdminController@listCV')->name("");
 
-        Route::get("/new", 'Admin\ManageCVController@create')->name("create");
-    });
+        Route::prefix("/new")->name('create.')->group(function () {
 
-    Route::get('/profile/{id_profile}', 'Admin\AdminController@profileDetail')->name('profile-detail');
+            Route::get('', 'Admin\ManageCVController@create')->name("init");
+
+            Route::get("/identity", 'Admin\ManageCVController@fillIdentity')->name("identity");
+
+            Route::get("/{id}/experience", 'Admin\ManageCVController@fillExperience')->name("experiece");
+        });
+    });
 
     Route::prefix('resource')->name('resource.')->group(function () {
         Route::resources([
