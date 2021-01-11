@@ -1,7 +1,9 @@
 <template>
   <div class="card overflow-auto">
     <div class="card-header">
-      <div class="card-title">Skill</div>
+      <div class="card-title">
+        <input type="text" v-model="custom_categories" />
+      </div>
     </div>
     <div class="card-body">
       <table class="table text-center">
@@ -74,6 +76,12 @@
       >
         Next section
       </button>
+      <a
+        v-bind:href="'/admin/CV/' + cv_id"
+        class="btn btn-primary col-6 offset-6 mt-3"
+      >
+        Skip
+      </a>
     </div>
   </div>
 </template>
@@ -82,7 +90,9 @@
 export default {
   data() {
     return {
+      cv_id: window.location.pathname.split("/")[4],
       records: [],
+      custom_categories: null,
       attribute_lines: ["Name", "Description"],
       showInputAttributeLine: false,
       newAttributeLine: "",
@@ -118,8 +128,8 @@ export default {
 
     submit() {
       let formData = new FormData();
-      formData.append("nama", "Skill");
-      formData.append("order", 3);
+      formData.append("nama", this.custom_categories);
+      formData.append("order", 1);
       formData.append("cv_id", window.location.pathname.split("/")[4]);
       formData.append("is_active", 1);
 
