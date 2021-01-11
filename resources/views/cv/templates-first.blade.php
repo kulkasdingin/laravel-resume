@@ -2,9 +2,7 @@
 
 @section('style')
 
-<link rel="stylesheet" href="{{ asset('/assets/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('/assets/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('/assets/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('/assets/adminlte/dist/css/adminlte.min.css') }}"> -->
 
 <style scoped>
         /*
@@ -28,6 +26,7 @@
         /* //-- yui-grids style overrides -- */
         body { font-family: Georgia; color: #444; }
         #inner { padding: 10px 80px; margin: auto; max-width:720px; background: #f5f5f5; border: solid #666; border-width: 8px 0 2px 0; }
+        #innerDownload { padding: 10px 80px; margin: auto; max-width:720px; }
         .yui-gf { margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #ccc; }
 
         /* //-- header, body, footer -- */
