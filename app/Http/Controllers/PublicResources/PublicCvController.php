@@ -58,9 +58,9 @@ class PublicCvController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(String $id)
     {
-        $data = CV::where('id', $id)->with([
+        $data = CV::where('id', $id)->orWhere('uuid', $id)->with([
             'customFieldCategories', 
             'customFieldCategories.customFieldAttributeLines', 
             'customFieldCategories.customFieldRecords',
@@ -68,9 +68,20 @@ class PublicCvController extends Controller
             ->firstOr(function() {
                 throw(new ApiResourceNotFound("CV with specified ID cannot be found"));
             });
+        if ($data['is_protected']) {
+            if ($data['uuid'] == $id) {
+                return response()->json([
+                    'cv'=> $data,
+                ]);
+            }
+            return response()->json([
+                'detail'=>'data is protected'
+            ], 401);
+        }
         return response()->json([
-            'cv'=> $data,
+            'cv'=>$data
         ]);
+        
     }
 
     /**
