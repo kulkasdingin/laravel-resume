@@ -54,18 +54,35 @@
               </td>
               <td class="align-content-center">
                 <!-- Show modal to update CV -->
+                <a
+                  v-bind:href="'/admin/CV/' + cv.id"
+                  class="btn btn-sm btn-info"
+                  >View</a
+                >
                 <a href="" class="btn btn-sm btn-warning">Update</a>
                 <!-- Url to display template cv -->
-                <a v-if="cv.is_protected" v-bind:href="'/CV/first/' + cv.uuid" class="btn btn-sm btn-primary"
+                <a
+                  v-if="cv.is_protected"
+                  v-bind:href="'/CV/first/' + cv.uuid"
+                  class="btn btn-sm btn-primary"
                   >View First Template</a
                 >
-                <a v-else v-bind:href="'/CV/first/' + cv.id" class="btn btn-sm btn-primary"
+                <a
+                  v-else
+                  v-bind:href="'/CV/first/' + cv.id"
+                  class="btn btn-sm btn-primary"
                   >View First Template</a
                 >
-                <a v-if="cv.is_protected" v-bind:href="'/CV/second/' + cv.uuid" class="btn btn-sm btn-primary"
+                <a
+                  v-if="cv.is_protected"
+                  v-bind:href="'/CV/second/' + cv.uuid"
+                  class="btn btn-sm btn-primary"
                   >View Second Template</a
                 >
-                <a v-else v-bind:href="'/CV/second/' + cv.id" class="btn btn-sm btn-primary"
+                <a
+                  v-else
+                  v-bind:href="'/CV/second/' + cv.id"
+                  class="btn btn-sm btn-primary"
                   >View Second Template</a
                 >
                 <!-- Deactive a cv -->
