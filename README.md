@@ -26,6 +26,9 @@ php artisan key:generate
 ```sh
 php artisan migrate
 ```
+```sh
+php artisan storage:link
+```
 Installing depedency for vue
 ```sh
 npm install
