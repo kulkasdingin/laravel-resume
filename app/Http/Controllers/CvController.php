@@ -101,6 +101,31 @@ class CvController extends Controller
      */
     public function update(Request $request, Cv $cv)
     {
+        if($request->status == "update_cv"){
+            $data = $this->validateRequest($request);
+
+            $cv->update($data);
+
+            return response()->json([
+                'cv'=>$cv,
+                'status'=>"Profile has been updated successfully",
+            ]);
+        }
+        else if ($request->status == "update_photo"){
+                $data = $this->validatePhotoRequest($request);
+                $photo = $request->file('photo')->store('uploads/profile/photo','public');
+                $data['photo'] = $photo;
+
+                if ($cv->photo) {
+                    unlink(public_path('storage/'.$cv->photo));
+                }
+                $cv->update($data);
+
+                return response()->json([
+                    'cv'=>$cv,
+                    'status'=>"Photo Profile has been updated successfully",
+                ]);
+        }
         $data = $this->validateRequest($request);
 
         // Todo if fotonya didelete
@@ -155,6 +180,18 @@ class CvController extends Controller
             'use_profile_photo' => 'integer|nullable'
         ]); 
         
+        if ($validator->fails()){
+            throw(new ApiInvalidRequestData($validator->errors()));
+        }
+
+        return $validator->validated();
+    }
+
+    public function validatePhotoRequest($request, $thisModel = null){
+        $validator = Validator::make($request->all(), [
+            'photo'=>'nullable|image|mimes:jpeg,jpg,bmp,png|max:2000',
+        ]);
+
         if ($validator->fails()){
             throw(new ApiInvalidRequestData($validator->errors()));
         }
