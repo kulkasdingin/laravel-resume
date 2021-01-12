@@ -149,6 +149,17 @@
           v-model="profile.gender"
         />
       </div>
+      <div class="form-group">
+        <input
+          type="checkbox"
+          v-model="profile.is_protected"
+          class="form-check-input"
+          id="is_protected"
+        />
+        <label class="form-check-label" for="is_protected"
+          >Protect this CV</label
+        >
+      </div>
       <button
         type="button"
         class="btn btn-primary col-6 offset-6"
@@ -226,7 +237,11 @@ export default {
       formData.append("birth_date", this.profile.birth_date);
       formData.append("phone", this.profile.phone);
       formData.append("gender", this.profile.gender);
-      formData.append("is_protected", 0);
+      if (this.profile.is_protected == true) {
+        formData.append("is_protected", 1);
+      } else {
+        formData.append("is_protected", 0);
+      }
       formData.append("profile_id", this.profile.profile_id);
       formData.append("password", this.profile.password);
       formData.append("is_active", 1);
