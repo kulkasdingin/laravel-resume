@@ -18,7 +18,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::withoutTrashed()->with('cvs')->with('profileAttributeLines')->get();
+        $profiles = Profile::withoutTrashed()->with('cvs')->with('profileAttributeLine')->get();
         return response()->json([
             'profiles'=> $profiles,
         ]);

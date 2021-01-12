@@ -30,6 +30,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
         Route::get("", 'Admin\AdminController@listCV')->name("");
 
+        Route::get("/{id}", "Admin\ManageCVController@detail")->name("detail");
+
         Route::prefix("/new")->name('create.')->group(function () {
 
             Route::get('', 'Admin\ManageCVController@create')->name("init");

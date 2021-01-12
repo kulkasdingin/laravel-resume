@@ -54,7 +54,7 @@
               </td>
               <td class="align-content-center">
                 <a
-                  v-bind:href="'/admin/CV/detail/' + cv.id"
+                  v-bind:href="'/admin/CV/' + cv.id"
                   class="btn btn-sm btn-info"
                   >Detail</a
                 >

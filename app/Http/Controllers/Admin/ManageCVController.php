@@ -53,26 +53,8 @@ class ManageCVController extends Controller
         return view('cv.create.summary');
     }
 
-    // public function submit(Request $request)
-    // {
-    //     $request->validate([
-    //         'photo' => 'file|image',
-    //         'first_name' => 'required|filled|string',
-    //         'last_name' => 'required|filled|string',
-    //         'profession' => 'required|string',
-    //         'address' => 'string',
-    //         'email' => 'email',
-    //         'birth_date' => 'date',
-    //         'phone' => 'integer',
-    //         'gender' => 'string',
-    //         'password' => 'string',
-    //         'is_protected' => 'required|integer|max:1|min:0',
-    //         'profile_id' => 'required|integer|exist:App\Profile,id',
-    //     ]);
-
-    //     $request->file("photo")->store('photo');
-
-    //     $contents = file_get_contents($request->photo->path());
-
-    // }
+    public function detail()
+    {
+        return view('cv.detail');
+    }
 }

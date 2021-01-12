@@ -41,8 +41,11 @@ Vue.component('daftar-cv', require('./components/CVList.vue').default);
 Vue.component('cv-template-first',require('./components/cvtemplates/first/MainComponent.vue').default);
 Vue.component('cv-template-second',require('./components/cvtemplates/second/MainComponent.vue').default);
 
+// Detail CV
+Vue.component('cv-detail',require('./components/admin/CVDetail.vue').default);
+
 /**
- * Daftar CV baru
+ * Create new CV
  */
 Vue.component('cv-register-profile-select', require('./components/cvregister/profile-select.vue').default);
 Vue.component('cv-register-fill-identity', require('./components/cvregister/fill-identity.vue').default);

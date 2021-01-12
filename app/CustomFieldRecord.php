@@ -18,6 +18,6 @@ class CustomFieldRecord extends Model
 
     public function CustomFieldRecordAttributeLineValues()
     {
-        return $this->hasMany("App\CustomFieldRecordAttributeLineValue");
+        return $this->hasMany("App\CustomFieldRecordAttributeLineValue")->orderBy("custom_field_attribute_line_id");
     }
 }
