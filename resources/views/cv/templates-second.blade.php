@@ -1,7 +1,8 @@
 @extends('cv.base.base')
 
-@section('header')
-<style scoped>
+@section('style')
+<!-- <link rel="stylesheet" href="{{ asset('/assets/adminlte/dist/css/adminlte.min.css') }}"> -->
+<style>
       /*
  *  Draco HTML Template by @flamekaizar
  *  License: Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
@@ -107,15 +108,13 @@
 </style>
 @endsection
 @section('header')
-<head>
-	<title>Second Template</title>
-	<meta charset="utf-8" />
-    <meta name="keywords" content="" />
-	<meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link href='https://fonts.googleapis.com/css?family=Playfair+Display+SC:700' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'> 
-</head>
+<title>Second Template</title>
+<meta charset="utf-8" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href='https://fonts.googleapis.com/css?family=Playfair+Display+SC:700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'> 
 @endsection
 @section('content')
 <cv-template-second><cv-template-second>

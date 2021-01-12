@@ -6,9 +6,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 
 <head>
-    @yield('header')
     @yield('style')
-
+    @yield('header')
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -22,8 +21,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('/assets/adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('/assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('/assets/adminlte/dist/js/adminlte.min.js') }}"></script>
     <!-- Vue -->
     <script src="{{ asset('/js/app.js') }}"></script>
 

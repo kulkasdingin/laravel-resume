@@ -9,6 +9,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueToastr2 from 'vue-toastr-2';
+import VueHtml2pdf from 'vue-html2pdf';
 
 import 'vue-toastr-2/dist/vue-toastr-2.min.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -17,6 +18,7 @@ window.toastr = require('toastr');
 
 Vue.use(VueToastr2);
 Vue.use(VueSweetalert2);
+Vue.use(VueHtml2pdf);
 
 /**
  * The following block of code may be used to automatically register your

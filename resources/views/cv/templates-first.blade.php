@@ -1,6 +1,9 @@
 @extends('cv.base.base')
 
-@section('header')
+@section('style')
+
+<!-- <link rel="stylesheet" href="{{ asset('/assets/adminlte/dist/css/adminlte.min.css') }}"> -->
+
 <style scoped>
         /*
         ---------------------------------------------------------------------------------
@@ -23,6 +26,7 @@
         /* //-- yui-grids style overrides -- */
         body { font-family: Georgia; color: #444; }
         #inner { padding: 10px 80px; margin: auto; max-width:720px; background: #f5f5f5; border: solid #666; border-width: 8px 0 2px 0; }
+        #innerDownload { padding: 10px 80px; margin: auto; max-width:720px; }
         .yui-gf { margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #ccc; }
 
         /* //-- header, body, footer -- */
@@ -67,16 +71,15 @@
         /* --// override to force 1/8th width grids -- */
         .yui-gf .yui-u{width:80.2%;}
         .yui-gf div.first{width:12.3%;}
+
+        .image {width: 50%; max-width:50%}
 </style>
 @endsection
 @section('header')
-<head>
 	<title>First Template</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" media="all" /> 
-</head>
 @endsection
 @section('content')
 <cv-template-first><cv-template-first>

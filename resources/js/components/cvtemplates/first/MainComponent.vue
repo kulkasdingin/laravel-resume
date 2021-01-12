@@ -1,8 +1,46 @@
 <template>
-<div id="doc2" v-if="cvDataLoaded" class="yui-t7">
+<body>
+	<div id="innerDownload">
+		<button v-on:click="generateReport"> save as  pdf</button>
+	</div>
+	
+	<vue-html2pdf
+        :show-layout="true"
+        :float-layout="false"
+        :enable-download="true"
+        :preview-modal="true"
+        :paginate-elements-by-height="1400"
+        :filename= cv.first_name
+        :pdf-quality="2"
+        :manual-pagination="false"
+        pdf-format="a4"
+        pdf-orientation="landscape"
+        pdf-content-width="100%"
+ 
+        @progress="onProgress($event)"
+        @hasStartedGeneration="hasStartedGeneration()"
+        @hasGenerated="hasGenerated($event)"
+        ref="html2Pdf"
+    >
+	<section slot="pdf-content">
+		<div id="doc2" v-if="cvDataLoaded" class="yui-t7">
 	<div id="inner">
 		<div id="hd">
 			<div class="yui-gc">
+				<div class="image">
+					<template v-if="cv.photo">
+						<img id="profile-image" class="image"
+							v-bind:src="'/storage/'+cv.photo"
+							alt="User profile picture"
+							style="border: 3px solid; transition: border-radius .3s ease">
+					</template>
+					<template v-else>
+						<img id="profile-image" class="image"
+							v-bind:src="'https://img.icons8.com/carbon-copy/100/000000/no-image.png'"
+							alt="User profile picture"
+							style="border: 3px solid; transition: border-radius .3s ease">
+					</template>
+                </div>
 				<div class="yui-u first">
 					<h1>{{ cv.first_name }} {{ cv.last_name }}</h1>
 					<h2>{{ cv.profession }}</h2>
@@ -11,6 +49,9 @@
 				<div class="yui-u">
 					<div class="contact-info">
 						<p>{{ cv.phone }} - {{ cv.email }}</p>
+					</div><!--// .contact-info -->
+					<div class="contact-info">
+						<p>{{ cv.description }}</p>
 					</div><!--// .contact-info -->
 				</div>
 			</div><!--// .yui-gc -->
@@ -44,9 +85,14 @@
 
 
 </div><!--// doc -->
+	</section>
+</vue-html2pdf>
+</body>
+
 </template>
 
 <script>
+	import VueHtml2pdf from 'vue-html2pdf';
     export default {
         data(){
             return{
@@ -58,7 +104,10 @@
         methods: {
             cvInit(){
 			
-            },
+			},
+			generateReport () {
+            	this.$refs.html2Pdf.generatePdf()
+        	},
             putAsyncData(data){
 				this.cv = data;
 				this.cvDataLoaded = true;
