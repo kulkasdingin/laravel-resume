@@ -1,61 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Project Unpause
+> A Laravel Content Management System for your resume / CV.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+A Deployable Laravel web app template for creating-hosting-and-managing your resume or CV. The main feature of this web app is the custom fields for your various CV needs. You can add various attributes that you want without limitations such as: 'work', 'experience', 'achievement' and many more. Display your custom CV with customizeable template using your own vue component.
 
-## About Laravel
+![](header.png)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+------
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Depedency
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- XAMPP (or Mysql)
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+initial configuration for laravel project
+```sh
+cp .env.example .env
+```
+```sh
+composer install
+```
+```sh
+php artisan key:generate
+```
+```sh
+php artisan migrate
+```
+Installing depedency for vue
+```sh
+npm install
+```
+Build vue apps
+```sh
+npm run dev
+```
+Or using (for hot-reload)
+```sh
+npm run watch
+```
+Run laravel
+```sh
+php artisan serve
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Usage example
 
-## Laravel Sponsors
+Deploy it in your hosted site. See our example site here [resume.frz.codes](resume.frz.codes).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+## Development History
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+* 0.1.0 (Jan 2021)
+    * Implement profile feature
+    * Implement CV feature
+    * Implement custom field feature
+
+* 0.0.1 (2020)
+    * Work in progress
+
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. See issue
+2. Fork it (<https://github.com/kulkasdingin/laravel-resume>)
+3. Create your feature branch (`git checkout -b feature/fooBar`)
+4. Commit your changes (`git commit -am 'Add some fooBar'`)
+5. Push to the branch (`git push origin feature/fooBar`)
+6. Create a new Pull Request
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Initial Development Team
 
-## Security Vulnerabilities
+Ahmad Naufal Hilmy – [anhilmy](https://github.com/anhilmy)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Ariq Naufal Satria – [Arnastria](https://github.com/Arnastria)
 
-## License
+Douglas Raevan Faisal – [douglasraevan](https://github.com/douglasraevan)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Muhamad Fariz Farhan – [kulkasdingin](https://github.com/kulkasdingin)
+
+Ramawajdi Kanishka Anwar – [ramawajdika](https://github.com/ramawajdika)
+
+## Lisence
+Distributed under the [MIT license](https://opensource.org/licenses/MIT). See ``LICENSE`` for more information.
