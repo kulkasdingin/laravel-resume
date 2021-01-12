@@ -30,8 +30,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
         Route::get("", 'Admin\AdminController@listCV')->name("");
 
-        Route::get("/{id}", "Admin\ManageCVController@detail")->name("detail");
-
         Route::prefix("/new")->name('create.')->group(function () {
 
             Route::get('', 'Admin\ManageCVController@create')->name("init");
@@ -46,6 +44,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
             Route::get("/{id}/extra", 'Admin\ManageCVController@fillExtra')->name("extra");
         });
+
+        Route::get("/{id}", "Admin\ManageCVController@detail")->name("detail");
     });
 
     Route::get('/profile/{id_profile}', 'Admin\AdminController@profileDetail')->name('profile-detail');
@@ -64,12 +64,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     });
 });
 
-Route::prefix('public-resource')->name('PublicResources.')->group(function() {
+Route::prefix('public-resource')->name('PublicResources.')->group(function () {
 
     Route::resources([
         'cv' => 'PublicResources\PublicCvController'
     ]);
-
 });
 
 Route::prefix('CV')->name('CV.')->group(function () {

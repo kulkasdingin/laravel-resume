@@ -60,7 +60,7 @@
                   </tr>
                   <tr v-if="profile.gender">
                     <td>Gender</td>
-                    <td>{{ profile.gender == 1 ? "Male" : "Female" }}</td>
+                    <td>{{ profile.gender }}</td>
                   </tr>
                   <tr v-if="profile.birth_date">
                     <td>Birth Date</td>
