@@ -95,7 +95,7 @@ export default {
             return{
 				cv: {},
 				cvDataLoaded: false,
-                uri: '/admin/resource/cvs'
+                uri: '/public-resource/cv'
             }
         },
         methods: {

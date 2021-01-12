@@ -43,6 +43,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     });
 });
 
+Route::prefix('public-resource')->name('PublicResources.')->group(function() {
+
+    Route::resources([
+        'cv' => 'PublicResources\PublicCvController'
+    ]);
+
+});
+
 Route::prefix('CV')->name('CV.')->group(function () {
 
     Route::get('/first/{idcv}', 'CV\CVController@templates_first')->name('templates_first');
