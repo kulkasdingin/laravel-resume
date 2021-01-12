@@ -12,7 +12,7 @@ use App\CustomFieldRecord;
 use App\CustomFieldRecordAttributeLineValue;
 
 
-class CustomFieldCategoryController extends Controller
+class CustomFieldController extends Controller
 {
     /**
      * Display a listing of the resource.

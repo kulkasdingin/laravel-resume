@@ -34,7 +34,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::resources([
             'profiles' => ProfileController::class,
             'cvs' => CvController::class,
-            'custom-field' => CustomFieldCategoryController::class
+            'custom-field' => CustomFieldController::class
         ]);
     });
 });
