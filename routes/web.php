@@ -36,6 +36,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
             'cvs' => CvController::class,
             'custom-field' => CustomFieldController::class
         ]);
+
+        Route::patch('profiles/{id_profile}/profile-attribute-line', 'ProfileController@updateProfileAttributeLine');
+        Route::post('profiles/{id_profile}/profile-attribute-line', 'ProfileController@addProfileAttributeLine');
+        Route::delete('profiles/{id_profile}/profile-attribute-line', 'ProfileController@deleteProfileAttributeLine');
     });
 });
 
