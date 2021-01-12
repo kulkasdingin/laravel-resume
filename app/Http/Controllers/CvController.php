@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ApiInvalidRequestData;
 use App\Cv;
+use App\Profile;
 
 class CvController extends Controller
 {
@@ -46,6 +47,9 @@ class CvController extends Controller
             $photo = $request->file('photo')->store('uploads/cv/photo','public');
 
             $data['photo'] = $photo;
+        } else if($request->use_profile_photo == true){
+            $profile = Profile::findOrFail($request->profile_id);
+            $data["photo"] = $profile->photo;
         } else {
             unset($data['photo']);
         }
@@ -97,6 +101,31 @@ class CvController extends Controller
      */
     public function update(Request $request, Cv $cv)
     {
+        if($request->status == "update_cv"){
+            $data = $this->validateRequest($request);
+
+            $cv->update($data);
+
+            return response()->json([
+                'cv'=>$cv,
+                'status'=>"Profile has been updated successfully",
+            ]);
+        }
+        else if ($request->status == "update_photo"){
+                $data = $this->validatePhotoRequest($request);
+                $photo = $request->file('photo')->store('uploads/profile/photo','public');
+                $data['photo'] = $photo;
+
+                if ($cv->photo) {
+                    unlink(public_path('storage/'.$cv->photo));
+                }
+                $cv->update($data);
+
+                return response()->json([
+                    'cv'=>$cv,
+                    'status'=>"Photo Profile has been updated successfully",
+                ]);
+        }
         $data = $this->validateRequest($request);
 
         // Todo if fotonya didelete
@@ -132,7 +161,8 @@ class CvController extends Controller
         ]);
     }
 
-    public function validateRequest($request, $thisModel = null){
+    public function validateRequest(Request $request, $thisModel = null){
+        
         $validator = Validator::make($request->all(), [
             'first_name'=>'required',
             'last_name'=>'required',
@@ -146,7 +176,20 @@ class CvController extends Controller
             'password'=>'nullable',
             'is_active'=>'required',
             'is_protected'=>'required',
-            'profile_id'=>'required'
+            'profile_id'=>'required',
+            'use_profile_photo' => 'integer|nullable'
+        ]); 
+        
+        if ($validator->fails()){
+            throw(new ApiInvalidRequestData($validator->errors()));
+        }
+
+        return $validator->validated();
+    }
+
+    public function validatePhotoRequest($request, $thisModel = null){
+        $validator = Validator::make($request->all(), [
+            'photo'=>'nullable|image|mimes:jpeg,jpg,bmp,png|max:2000',
         ]);
 
         if ($validator->fails()){
